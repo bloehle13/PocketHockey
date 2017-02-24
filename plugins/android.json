@@ -1,0 +1,76 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.brandon.pockethockey"
+        }
+    }
+}
