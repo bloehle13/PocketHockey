@@ -3,6 +3,7 @@ var ShotLocation = {
                     .22, .3, .22,
                     .05, .075, .05],
   getPercentChance: function(i){
+    //console.log("Chance: " + this.percentChances[i]);
     return this.percentChances[i];
   }
 }
