@@ -2,8 +2,9 @@ var Player = {
   shotAccuracy: 0.5,
   shotPower: 0.5,
   confidence: 0.5,//between 0.4-0.6
-  shoot: function(shotLocationPercent){
-    return this.shotAccuracy * this.shotPower * shotLocationPercent * this.confidence;
+  type: "",
+  shoot: function(STRATSMODIFIER){
+    return this.shotAccuracy * this.shotPower * STRATSMODIFIER * this.confidence;
   }
 }
 

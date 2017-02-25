@@ -1,7 +1,7 @@
 var Goalie = {
   savePercentage: 0.9,
   confidence: 1.0,//between 1.00 and 1.1
-  consistency: .02,//between .0 and .1
+  consistency: .05,//between .0 and .1
   makeSave: function(shot){
     var saveChance = (this.savePercentage - shot) * this.confidence;
     console.log("Shot: " + shot);

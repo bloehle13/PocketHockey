@@ -4,6 +4,7 @@ var vlasic = Object.create(Defender);
 var smith = Object.create(Goalie);
 var goals = 0;
 var saves = 0;
+/*
 for(var i = 0; i < 10; i++){
   var save = smith.makeSave(hagelin.shoot(hagelin.getShotLocation()));
   if(save) saves++;
@@ -20,4 +21,5 @@ for(var i = 0; i < 10; i++){
   if(save) saves++;
   if(!save) goals++;
 }
+*/
 console.log('Goals: ' + goals + '\nSaves: ' + saves);
