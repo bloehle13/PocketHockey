@@ -45,6 +45,40 @@
 
 <body>
     <div>
+      <h1>Forward Stats</h1>
+        <form>
+          <p id="shotPowerNumF">Shot Power: </p><br>
+            <input type="range" id="shotPowerSlideF"><br>
+          <p id="shotAccuracyNumF">Shot Accuracy: </p><br>
+            <input type="range" id="shotAccuracySlideF"><br>
+          <p id="confidenceNumF">Confidence: </p><br>
+            <input type="range" id="confidenceSlideF"><br>
+        </form>
+
+        <h1>Defender Stats</h1>
+          <form>
+            <p id="shotPowerNumD">Shot Power: </p><br>
+              <input type="range" id="shotPowerSlideD"><br>
+            <p id="shotAccuracyNumD">Shot Accuracy: </p><br>
+              <input type="range" id="shotAccuracySlideD"><br>
+            <p id="confidenceNumD">Confidence: </p><br>
+              <input type="range" id="confidenceSlideD"><br>
+          </form>
+
+          <h1>Goalie Stats</h1>
+            <form>
+              <p id="savePercentageNum">Save Percentage: </p><br>
+                <input type="range" id="savePercentageSlide"><br>
+              <p id="confidenceNumG">Confidence: </p><br>
+                <input type="range" id="confidenceSlideG"><br>
+              <p id="consistencyNumG">Consistency: </p><br>
+                <input type="range" id="consistencySlideG"><br>
+            </form>
+
+        <button id='simulate' onclick="simulate()">Simulate</button>
+
+        <p id="goals">Goals: 0</p>
+        <p id="saves">Saves: 0</p>
 
     </div>
     <script type="text/javascript" src="cordova.js"></script>

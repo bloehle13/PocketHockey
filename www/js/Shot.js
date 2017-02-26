@@ -5,14 +5,11 @@ var Shot = {
 
   getShotLocation: function(player){
     if(player.type === 'Forward'){
-      
+      return this.percentChances[(Math.floor(Math.random() * 9))];
     }
     else if(player.type === 'Defender'){
-
+      return this.percentChances[(Math.floor(Math.random() * 9))];
     }
   },
 
-  getShot: function(player){
-    getShot
-  }
 }

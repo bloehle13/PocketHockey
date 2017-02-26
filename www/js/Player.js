@@ -5,6 +5,11 @@ var Player = {
   type: "",
   shoot: function(STRATSMODIFIER){
     return this.shotAccuracy * this.shotPower * STRATSMODIFIER * this.confidence;
+  },
+  getShot: function(){
+    var shotLocation = Object.create(Shot);
+    console.log(shotLocation.getShotLocation(this));
+    return shotLocation.getShotLocation(this);
   }
 }
 

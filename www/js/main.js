@@ -1,25 +1,101 @@
-var hagelin = Object.create(Forward);
-var hagelin2 = Object.create(Forward);
-var vlasic = Object.create(Defender);
-var smith = Object.create(Goalie);
-var goals = 0;
-var saves = 0;
-/*
-for(var i = 0; i < 10; i++){
-  var save = smith.makeSave(hagelin.shoot(hagelin.getShotLocation()));
-  if(save) saves++;
-  if(!save) goals++;
+var forward1 = Object.create(Forward);
+var forward2 = Object.create(Forward);
+var defender1 = Object.create(Defender);
+var goalie1 = Object.create(Goalie);
+
+$(document).ready(function() {
+  var shotPowerF = $('#shotPowerSlideF').val() / 100;
+  var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
+  var confidenceF = $('#confidenceSlideF').val() / 100;
+  var shotPowerD = $('#shotPowerSlideD').val() / 100;
+  var shotAccuracyD = $('#shotAccuracySlideD').val() / 100;
+  var confidenceD = $('#confidenceSlideD').val() / 100;
+  var savePercentageNum = $('#savePercentageSlide').val() / 100;
+  var confidenceG = 1 + $('#confidenceSlideG').val() / 1000;
+  var consistencyG = $('#consistencySlideG').val() / 1000;
+  $('#shotPowerNumF').text('Shot Power: ' + shotPowerF);
+  $('#shotAccuracyNumF').text('Shot Accuracy: ' + shotAccuracyF);
+  $('#confidenceNumF').text('Confidence: ' + confidenceF);
+  $('#shotPowerNumD').text('Shot Power: ' + shotPowerD);
+  $('#shotAccuracyNumD').text('Shot Accuracy: ' + shotAccuracyD);
+  $('#confidenceNumD').text('Confidence: ' + confidenceD);
+  $('#savePercentageNum').text('Save Percentage: ' + savePercentageNum);
+  $('#confidenceNumG').text('Confidence: ' + confidenceG);
+  $('#consistencyNumG').text('Consistency: ' + consistencyG);
+});
+$(document).on('input', '#shotPowerSlideF', function() {
+    var shotPowerF = $('#shotPowerSlideF').val() / 100;
+    forward1.shotPower = shotPowerF;
+    forward2.shotPower = shotPowerF;
+    $('#shotPowerNumF').text('Shot Power: ' + shotPowerF);
+});
+$(document).on('input', '#shotAccuracySlideF', function() {
+    var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
+    forward1.shotAccuracy = shotAccuracyF;
+    forward2.shotAccuracy = shotAccuracyF;
+    $('#shotAccuracyNumF').text('Shot Accuracy: ' + shotAccuracyF);
+});
+$(document).on('input', '#confidenceSlideF', function() {
+    var confidenceF = $('#confidenceSlideF').val() / 100;
+    forward1.confidence = confidenceF;
+    forward2.confidence = confidenceF;
+    $('#confidenceNumF').text('Confidence: ' + confidenceF);
+});
+$(document).on('input', '#shotPowerSlideD', function() {
+    var shotPowerD = $('#shotPowerSlideD').val() / 100;
+    defender1.shotPower = shotPowerD;
+    $('#shotPowerNumD').text('Shot Power: ' + shotPowerD);
+});
+$(document).on('input', '#shotAccuracySlideD', function() {
+    var shotAccuracyD = $('#shotAccuracySlideD').val() / 100;
+    defender1.shotAccuracy = shotAccuracyD;
+    $('#shotAccuracyNumD').text('Shot Accuracy: ' + shotAccuracyD);
+});
+$(document).on('input', '#confidenceSlideD', function() {
+    var confidenceD = $('#confidenceSlideD').val() / 100;
+    defender1.confidence = confidenceD;
+    $('#confidenceNumD').text('Confidence: ' + confidenceD);
+});
+$(document).on('input', '#savePercentageSlide', function() {
+    var savePercentageNum = $('#savePercentageSlide').val() / 100;
+    goalie1.savePercentage = savePercentageNum;
+    $('#savePercentageNum').text('Save Percentage: ' + savePercentageNum);
+});
+$(document).on('input', '#confidenceSlideG', function() {
+    var confidenceG = 1 + $('#confidenceSlideG').val() / 1000;
+    goalie1.confidence = confidenceG;
+    $('#confidenceNumG').text('Confidence: ' + confidenceG);
+});
+$(document).on('input', '#consistencySlideG', function() {
+    var consistencyG = $('#consistencySlideG').val() / 1000;
+    goalie1.consistency = consistencyG;
+    $('#consistencyNumG').text('Consistency: ' + consistencyG);
+});
+
+function simulate(){
+  var goals = 0;
+  var saves = 0;
+  for(var i = 0; i < 10; i++){
+    var save = goalie1.makeSave(forward1.shoot(forward1.getShot()));
+    if(save) saves++;
+    if(!save) goals++;
+  }
+  for(var i = 0; i < 10; i++){
+    var save = goalie1.makeSave(forward2.shoot(forward2.getShot()));
+    if(save) saves++;
+    if(!save) goals++;
+  }
+  for(var i = 0; i < 10; i++){
+    var save = goalie1.makeSave(defender1.shoot(defender1.getShot()));
+    console.log(save);
+    if(save) saves++;
+    if(!save) goals++;
+  }
+  console.log(forward1);
+  console.log(forward2);
+  console.log(defender1);
+  console.log(goalie1);
+  $('#goals').text('Goals: ' + goals);
+  $('#saves').text('Saves: ' + saves);
+  console.log('Goals: ' + goals + '\nSaves: ' + saves);
 }
-for(var i = 0; i < 10; i++){
-  var save = smith.makeSave(hagelin2.shoot(hagelin2.getShotLocation()));
-  if(save) saves++;
-  if(!save) goals++;
-}
-for(var i = 0; i < 10; i++){
-  var save = smith.makeSave(vlasic.shoot(vlasic.getShotLocation()));
-  console.log(save);
-  if(save) saves++;
-  if(!save) goals++;
-}
-*/
-console.log('Goals: ' + goals + '\nSaves: ' + saves);
