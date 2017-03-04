@@ -1,7 +1,3 @@
-var forward1 = Object.create(Forward);
-var forward2 = Object.create(Forward);
-var defender1 = Object.create(Defender);
-var goalie1 = Object.create(Goalie);
 
 $(document).ready(function() {
   var shotPowerF = $('#shotPowerSlideF').val() / 100;
@@ -73,29 +69,6 @@ $(document).on('input', '#consistencySlideG', function() {
 });
 
 function simulate(){
-  var goals = 0;
-  var saves = 0;
-  for(var i = 0; i < 10; i++){
-    var save = goalie1.makeSave(forward1.shoot(forward1.getShot()));
-    if(save) saves++;
-    if(!save) goals++;
-  }
-  for(var i = 0; i < 10; i++){
-    var save = goalie1.makeSave(forward2.shoot(forward2.getShot()));
-    if(save) saves++;
-    if(!save) goals++;
-  }
-  for(var i = 0; i < 10; i++){
-    var save = goalie1.makeSave(defender1.shoot(defender1.getShot()));
-    console.log(save);
-    if(save) saves++;
-    if(!save) goals++;
-  }
-  console.log(forward1);
-  console.log(forward2);
-  console.log(defender1);
-  console.log(goalie1);
-  $('#goals').text('Goals: ' + goals);
-  $('#saves').text('Saves: ' + saves);
-  console.log('Goals: ' + goals + '\nSaves: ' + saves);
+  var game = Object.create(GameProgression);
+  game.progressGame();
 }

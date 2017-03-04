@@ -1,15 +1,25 @@
 var Player = {
-  shotAccuracy: 0.5,
-  shotPower: 0.5,
+  shotAccuracy: 0.85,
+  shotPower: 0.85,
   confidence: 0.5,//between 0.4-0.6
   type: "",
-  shoot: function(STRATSMODIFIER){
-    return this.shotAccuracy * this.shotPower * STRATSMODIFIER * this.confidence;
+  passingShootingDiff: 0, //slider difference, 0 means slider in middle
+  shoot: function(shotLocation){
+    var shotWide = this.missTheNet();
+    if(shotWide){
+      return 0;
+    }
+    else{
+      return this.shotAccuracy * this.shotPower * shotLocation * this.confidence;
+    }
   },
   getShot: function(){
     var shotLocation = Object.create(Shot);
-    console.log(shotLocation.getShotLocation(this));
     return shotLocation.getShotLocation(this);
+  },
+  missTheNet: function(){
+    //30% chance of missing the net
+    return Math.random() <= 0.25;
   }
 }
 
