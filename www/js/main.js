@@ -70,5 +70,6 @@ $(document).on('input', '#consistencySlideG', function() {
 
 function simulate(){
   var game = Object.create(GameProgression);
+  game.reset();
   game.progressGame();
 }

@@ -9,7 +9,7 @@ offensiveStrategies.shooting = 0.5;
 offensiveStrategies.passing = 0.5;
 
 
-var UserTeam = {
+var CPUTeam = {
 
   momentum: 1,
   shotInterval: 3,//range of minutes between shots
@@ -20,7 +20,7 @@ var UserTeam = {
   saves: 0,
   shotAttempts: 0,
   goals: 0,
-  name: 'UserTeam',
+  name: 'CPUTeam',
   getShotInterval: function(){
     //equation returns about 30-45 shot attempts per game on average
     return Math.floor((Math.random() + 0.1) * this.shotInterval / this.momentum);
