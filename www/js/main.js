@@ -70,6 +70,24 @@ $(document).on('input', '#consistencySlideG', function() {
 
 function simulate(){
   var game = Object.create(GameProgression);
-  game.reset();
-  game.progressGame();
+  var UserWins = 0;
+  var CPUWins = 0;
+  var ties = 0;
+  for(var i = 0; i < 1; i++){
+    game.progressGame();
+    if(game.recordWinner() === 'UserTeam'){
+      UserWins++;
+    }
+    else if(game.recordWinner() === 'CPUTeam'){
+      CPUWins++;
+    }
+    else if(game.recordWinner() === 'tie'){
+      ties++;
+    }
+    game.reset();
+  }
+  console.log('User: ' + UserWins);
+  console.log('CPU: ' + CPUWins);
+  console.log('ties: ' + ties);
+
 }

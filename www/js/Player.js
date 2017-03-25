@@ -5,6 +5,7 @@ var Player = {
   type: "",
   faceoffs: 0.5,
   passingShootingDiff: 0, //slider difference, 0 means slider in middle
+  height: 73, //in inches
   shoot: function(shotLocation){
     var shotWide = this.missTheNet();
     if(shotWide){
