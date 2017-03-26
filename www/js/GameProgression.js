@@ -45,12 +45,12 @@ var GameProgression = {
 
   progressGame: function(){
     while(this.gameTime > 0){
-        if(this.faceoff() === UserTeam){
+      if(this.faceoff() === UserTeam){
         this.gameTime -= UserTeam.getShotInterval();
         console.log("Team 1 wins faceoff");
         this.takeShot(UserTeam, CPUTeam);
       }
-      if(this.faceoff() === CPUTeam){
+      else if(this.faceoff() === CPUTeam){
         this.gameTime -= CPUTeam.getShotInterval();
         console.log("Team 2 wins faceoff");
         this.takeShot(CPUTeam, UserTeam);
@@ -65,56 +65,64 @@ var GameProgression = {
       if(Math.random() <= shotLocation + oTeam.offensiveStrategies.shooting){
         return 'Shoot';
       }
-      else return 'Pass';
+      else{
+        return 'Pass';
+      }
   },
 
   takeShot: function(oTeam, dTeam){
     console.log("Current time in zone: " + oTeam.timeInZone);
-    var player = oTeam.getRandomPlayer();
-    var shotLocation = player.getShot();
+    var playerShooting = oTeam.getRandomPlayer();
+    var shotLocation = playerShooting.getShot();
     var shootOrPass = this.shootOrPass(shotLocation, oTeam);
     if(shootOrPass === 'Shoot'){
-      var shot = player.shoot(shotLocation) + oTeam.timeInZone;
-      var screenNum = oTeam.screen();
-      var save = dTeam.goalie.makeSave(shot + screenNum);
-      if(save === true){
-        if(oTeam.name === 'UserTeam'){
-          CPUTeam.saves++;
-          UserTeam.shots++;
-          UserTeam.shotAttempts++;
-          console.log('Team 1 shoots, Team 2 makes the save');
-        }
-        if(oTeam.name === 'CPUTeam'){
-          UserTeam.saves++;
-          CPUTeam.shots++;
-          CPUTeam.shotAttempts++;
-          console.log('Team 2 shoots, Team 1 makes the save');
-        }
+      var shot = playerShooting.shoot(shotLocation) + oTeam.timeInZone;
+      var screenNum = oTeam.screen();//get screening tendancy
+      var playerShotBlock = dTeam.getRandomPlayer();
+      if(dTeam.blockShot(playerShotBlock)){
+        this.takeShot(dTeam, oTeam);
       }
-      if(save === false){
-        if(oTeam.name === 'UserTeam'){
-          UserTeam.shots++;
-          UserTeam.goals++;
-          UserTeam.shotAttempts++;
-          UserTeam.timeInZone = 0;
-          console.log('Team 1 scores');
+      else{
+        var save = dTeam.goalie.makeSave(shot + screenNum);//get save or goal from goalie
+        if(save === true){
+          if(oTeam.name === 'UserTeam'){
+            CPUTeam.saves++;
+            UserTeam.shots++;
+            UserTeam.shotAttempts++;
+            console.log(playerShooting.lastName + ' shoots, Team 2 makes the save');
+          }
+          if(oTeam.name === 'CPUTeam'){
+            UserTeam.saves++;
+            CPUTeam.shots++;
+            CPUTeam.shotAttempts++;
+            console.log(playerShooting.lastName + ' shoots, Team 1 makes the save');
+          }
         }
-        if(oTeam.name === 'CPUTeam'){
-          CPUTeam.shots++;
-          CPUTeam.goals++;
-          CPUTeam.shotAttempts++;
-          CPUTeam.timeInZone = 0;
-          console.log('Team 2 scores');
+        if(save === false){
+          if(oTeam.name === 'UserTeam'){
+            UserTeam.shots++;
+            UserTeam.goals++;
+            UserTeam.shotAttempts++;
+            UserTeam.timeInZone = 0;
+            console.log('Team 1 scores! Goal by ' + playerShooting.lastName);
+          }
+          if(oTeam.name === 'CPUTeam'){
+            CPUTeam.shots++;
+            CPUTeam.goals++;
+            CPUTeam.shotAttempts++;
+            CPUTeam.timeInZone = 0;
+            console.log('Team 2 score! Goal by ' + playerShooting.lastName);
+          }
         }
-      }
-      if(save === null){
-        if(oTeam.name === 'UserTeam'){
-          UserTeam.shotAttempts++;
-          console.log('Team 1 missed the net');
-        }
-        if(oTeam.name === 'CPUTeam'){
-          CPUTeam.shotAttempts++;
-          console.log('Team 2 missed the net');
+        if(save === null){
+          if(oTeam.name === 'UserTeam'){
+            UserTeam.shotAttempts++;
+            console.log(playerShooting.lastName + ' missed the net');
+          }
+          if(oTeam.name === 'CPUTeam'){
+            CPUTeam.shotAttempts++;
+            console.log(playerShooting.lastName + ' missed the net');
+          }
         }
       }
     }
@@ -123,24 +131,24 @@ var GameProgression = {
       if(Math.random() >= 0.5){
         if(oTeam.name === 'UserTeam'){
           UserTeam.timeInZone += 0.05;
-          console.log('Team 1 made a pass');
+          console.log(playerShooting.lastName + ' made a pass');
           this.takeShot(UserTeam, CPUTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone += 0.05;
-          console.log('Team 2 made a pass');
+          console.log(playerShooting.lastName + ' made a pass');
           this.takeShot(CPUTeam, UserTeam);
         }
       }
       else{
         if(oTeam.name === 'UserTeam'){
           UserTeam.timeInZone = 0;
-          console.log('Team 1 turned it over');
+          console.log(playerShooting.lastName + ' turned it over');
           this.takeShot(CPUTeam, UserTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone = 0;
-          console.log('Team 2 turned it over');
+          console.log(playerShooting.lastName + ' turned it over');
           this.takeShot(UserTeam, CPUTeam);
         }
       }

@@ -22,7 +22,7 @@ var OffensiveSliders = {
   }
 }
 
-var DeffensiveSliders = {
+var DefensiveSliders = {
   shotBlocking: 0.0,
   pokeChecking: 0.0,
   hitting: 0.0,

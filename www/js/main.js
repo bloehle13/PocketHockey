@@ -73,7 +73,7 @@ function simulate(){
   var UserWins = 0;
   var CPUWins = 0;
   var ties = 0;
-  for(var i = 0; i < 1; i++){
+  for(var i = 0; i < 10; i++){
     game.progressGame();
     if(game.recordWinner() === 'UserTeam'){
       UserWins++;

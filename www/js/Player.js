@@ -2,7 +2,12 @@ var Player = {
   shotAccuracy: 0.85,
   shotPower: 0.85,
   confidence: 0.5,//between 0.4-0.6
-  type: "",
+  shotBlocking: 0.5,
+  strength: 0.5,
+  age: 21,
+  speed: 0.5,
+  durability: 0.98,
+  injured: false,
   faceoffs: 0.5,
   passingShootingDiff: 0, //slider difference, 0 means slider in middle
   height: 73, //in inches
@@ -12,7 +17,12 @@ var Player = {
       return 0;
     }
     else{
-      return this.shotAccuracy * this.shotPower * shotLocation * this.confidence;
+      if(this.injured){//shot is divided by 2 if injured
+        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence / 2;
+      }
+      else{
+        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence;
+      }
     }
   },
   getShot: function(){
