@@ -32,12 +32,16 @@ var GameProgression = {
       this.UserTeamFaceoffs++;
       this.totalFaceoffs++;
       CPUTeam.timeInZone = 0;
+      CPUTeam.resetAssists();
+      UserTeam.addToAssist(player1);
       return UserTeam;
     }
     if(player2Faceoff > player1Faceoff){
       this.CPUTeamFaceoffs++;
       this.totalFaceoffs++;
       UserTeam.timeInZone = 0;
+      UserTeam.resetAssists();
+      CPUTeam.addToAssist(player2);
       return CPUTeam;
     }
     else this.faceoff();
@@ -48,11 +52,13 @@ var GameProgression = {
       if(this.faceoff() === UserTeam){
         this.gameTime -= UserTeam.getShotInterval();
         console.log("Team 1 wins faceoff");
+        UserTeam.resetAssists();
         this.takeShot(UserTeam, CPUTeam);
       }
-      else if(this.faceoff() === CPUTeam){
+      if(this.faceoff() === CPUTeam){
         this.gameTime -= CPUTeam.getShotInterval();
         console.log("Team 2 wins faceoff");
+        CPUTeam.resetAssists();
         this.takeShot(CPUTeam, UserTeam);
       }
     }
@@ -61,41 +67,64 @@ var GameProgression = {
 
   },
 
-  shootOrPass: function(shotLocation, oTeam){
-      if(Math.random() <= shotLocation + oTeam.offensiveStrategies.shooting){
-        return 'Shoot';
-      }
-      else{
-        return 'Pass';
-      }
-  },
-
   takeShot: function(oTeam, dTeam){
     console.log("Current time in zone: " + oTeam.timeInZone);
-    var playerShooting = oTeam.getRandomPlayer();
-    var shotLocation = playerShooting.getShot();
-    var shootOrPass = this.shootOrPass(shotLocation, oTeam);
+    var player = oTeam.getRandomPlayer();
+    var shotLocation = player.getShot();
+    var shootOrPass = oTeam.shootOrPass(shotLocation, player);
     if(shootOrPass === 'Shoot'){
-      var shot = playerShooting.shoot(shotLocation) + oTeam.timeInZone;
-      var screenNum = oTeam.screen();//get screening tendancy
+      var shot = player.shoot(shotLocation) + oTeam.timeInZone;
+      if(player.injured){//shot is not as effective if injured
+        shot /= 4;
+      }
       var playerShotBlock = dTeam.getRandomPlayer();
       if(dTeam.blockShot(playerShotBlock)){
+        if(oTeam.name === 'UserTeam'){
+          UserTeam.resetAssists();
+          CPUTeam.playerLastTouchedPuck = playerShotBlock;
+          var playerWithPuck = CPUTeam.getRandomPlayer();
+          CPUTeam.addToAssist(playerWithPuck)//someone got the blocked shot
+          console.log(playerWithPuck + ' picked up the block shot')
+        }
+        if(oTeam.name === 'CPUTeam'){
+          CPUTeam.resetAssists();
+          UserTeam.playerLastTouchedPuck = playerShotBlock;
+          var playerWithPuck = UserTeam.getRandomPlayer();
+          UserTeam.addToAssist(playerWithPuck)//someone got the blocked shot
+          console.log(playerWithPuck + ' picked up the block shot')
+        }
         this.takeShot(dTeam, oTeam);
       }
       else{
-        var save = dTeam.goalie.makeSave(shot + screenNum);//get save or goal from goalie
+        var save = 0;
+        var screenPlayer = oTeam.screen();//get screening player
+        if(screenPlayer.tip){
+          if(oTeam.name === 'UserTeam'){
+            UserTeam.addToAssist(player);
+          }
+          if(oTeam.name === 'CPUTeam'){
+            CPUTeam.addToAssist(player);
+          }
+          player = screenPlayer;
+          save = dTeam.goalie.makeSave(screenPlayer.shot + screenPlayer.screenNum);//get save or goal from goalie
+        }
+        else{
+          save = dTeam.goalie.makeSave(shot + screenPlayer.screenNum);//get save or goal from goalie
+        }
         if(save === true){
           if(oTeam.name === 'UserTeam'){
             CPUTeam.saves++;
             UserTeam.shots++;
             UserTeam.shotAttempts++;
-            console.log(playerShooting.lastName + ' shoots, Team 2 makes the save');
+            UserTeam.resetAssists();
+            console.log(player.lastName + ' shoots, Team 2 makes the save');
           }
           if(oTeam.name === 'CPUTeam'){
             UserTeam.saves++;
             CPUTeam.shots++;
             CPUTeam.shotAttempts++;
-            console.log(playerShooting.lastName + ' shoots, Team 1 makes the save');
+            CPUTeam.resetAssists();
+            console.log(player.lastName + ' shoots, Team 1 makes the save');
           }
         }
         if(save === false){
@@ -104,51 +133,57 @@ var GameProgression = {
             UserTeam.goals++;
             UserTeam.shotAttempts++;
             UserTeam.timeInZone = 0;
-            console.log('Team 1 scores! Goal by ' + playerShooting.lastName);
+            console.log('\n\n\nTeam 1 scores! Goal by ' + player.lastName + '. ' + UserTeam.getAssists(player));
           }
           if(oTeam.name === 'CPUTeam'){
             CPUTeam.shots++;
             CPUTeam.goals++;
             CPUTeam.shotAttempts++;
             CPUTeam.timeInZone = 0;
-            console.log('Team 2 score! Goal by ' + playerShooting.lastName);
+            console.log('\n\n\nTeam 2 score! Goal by ' + player.lastName + ' ' + CPUTeam.getAssists(player));
           }
         }
         if(save === null){
           if(oTeam.name === 'UserTeam'){
             UserTeam.shotAttempts++;
-            console.log(playerShooting.lastName + ' missed the net');
+            console.log(player.lastName + ' missed the net');
           }
           if(oTeam.name === 'CPUTeam'){
             CPUTeam.shotAttempts++;
-            console.log(playerShooting.lastName + ' missed the net');
+            console.log(player.lastName + ' missed the net');
           }
         }
       }
     }
     if(shootOrPass === 'Pass'){
       this.gameTime -= 0.1;
-      if(Math.random() >= 0.5){
+      if(Math.random() < player.passing){
         if(oTeam.name === 'UserTeam'){
           UserTeam.timeInZone += 0.05;
-          console.log(playerShooting.lastName + ' made a pass');
+          UserTeam.addToAssist(player);
+          UserTeam.playerLastTouchedPuck = player;
+          console.log(player.lastName + ' made a pass');
           this.takeShot(UserTeam, CPUTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone += 0.05;
-          console.log(playerShooting.lastName + ' made a pass');
+          CPUTeam.addToAssist(player);
+          CPUTeam.playerLastTouchedPuck = player;
+          console.log(player.lastName + ' made a pass');
           this.takeShot(CPUTeam, UserTeam);
         }
       }
       else{
         if(oTeam.name === 'UserTeam'){
           UserTeam.timeInZone = 0;
-          console.log(playerShooting.lastName + ' turned it over');
+          UserTeam.resetAssists();
+          console.log(player.lastName + ' turned it over');
           this.takeShot(CPUTeam, UserTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone = 0;
-          console.log(playerShooting.lastName + ' turned it over');
+          CPUTeam.resetAssists();
+          console.log(player.lastName + ' turned it over');
           this.takeShot(UserTeam, CPUTeam);
         }
       }
