@@ -16,6 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+.pocket-hockey-title{
+  color: #ffffff;
+}
+
+.navbar-toggle-custom{
+  border-color: #ffee00!important;
+}
+
+.sr-only{
+    background-color: #ffee00;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffee00;
+}
+
+
+.navbar-custom{
+  border-color: transparent;
+  background-color: #00258c;
+  border-radius: 0px;
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
+.page-header{
+  background-color: yellow;
+  height: 100%;
+}
+
 * {
     /*-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
