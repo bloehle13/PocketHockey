@@ -16,12 +16,123 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-.pocket-hockey-title{
+ #wrapper {
+     padding-left: 0;
+     -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+     -o-transition: all 0.5s ease;
+     transition: all 0.5s ease;
+ }
+
+ #wrapper.toggled {
+     padding-left: 200px;
+ }
+
+ #sidebar-wrapper {
+     z-index: 1000;
+     position: fixed;
+     left: 0px;
+     width: 0px;
+     height: 100%;
+     overflow-y: auto;
+     background: #000;
+     -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+     -o-transition: all 0.5s ease;
+     transition: all 0.5s ease;
+ }
+
+ #wrapper.toggled #sidebar-wrapper {
+     width: 200px;
+ }
+
+ #page-content-wrapper {
+     width: 100%;
+     position: absolute;
+     padding: 0px;
+ }
+
+ #wrapper.toggled #page-content-wrapper {
+     position: absolute;
+     margin-right: -200px;
+ }
+
+ /* Sidebar Styles */
+
+ .sidebar-nav {
+     position: absolute;
+     top: 0;
+     width: 200px;
+     margin: 0;
+     padding: 0;
+     list-style: none;
+ }
+
+ .sidebar-nav li {
+     text-indent: 20px;
+     line-height: 40px;
+ }
+
+ .sidebar-nav li a {
+     display: block;
+     text-decoration: none;
+     color: #999999;
+ }
+
+ .sidebar-nav li a:hover {
+     text-decoration: none;
+     color: #fff;
+     background: rgba(255,255,255,0.2);
+ }
+
+ .sidebar-nav li a:active,
+ .sidebar-nav li a:focus {
+     text-decoration: none;
+ }
+
+ .sidebar-nav > .sidebar-brand {
+     height: 65px;
+     font-size: 18px;
+     line-height: 60px;
+ }
+
+ .sidebar-nav > .sidebar-brand a {
+     color: #999999;
+ }
+
+ .sidebar-nav > .sidebar-brand a:hover {
+     color: #fff;
+     background: none;
+ }
+
+
+.half-body-test{
+  background-color: #ffffff;
+  height: 46vh;
+}
+
+.half-body{
+  background-color: #ffee00;
+  float: left;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.main-body{
+  height: 100%;
+  width: 100vw;
+  background-color: #ffee00;
+  position: absolute;
+  top: 8%;
+  bottom: 92%;
+}
+
+.pocket-hockey-title{/*title text for "Pocket Hockey"*/
   color: #ffffff;
 }
 
 .navbar-toggle-custom{
-  border-color: #ffee00!important;
+  border-color: #ffee00!important;/*yellow outline of top button*/
 }
 
 .sr-only{
@@ -32,29 +143,37 @@
   background-color: #ffee00;
 }
 
+#title{
+  color: #ffffff;
+}
 
-.navbar-custom{
+#menu-toggle{
+  margin-top: 10vh;
+}
+
+#page-header{/*Blue top border*/
   border-color: transparent;
   background-color: #00258c;
   border-radius: 0px;
-  margin-left: -1px;
-  margin-right: -1px;
+  height: 10vh;
+  width: 100%;
+  z-index: 100;
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+  top: 0px;
 }
 
-.page-header{
-  background-color: yellow;
-  height: 100%;
-}
 
 * {
     /*-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
-body {
+html, body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-
+    overflow-x: hidden!important;
 }
 
 /* Portrait layout (default) */
