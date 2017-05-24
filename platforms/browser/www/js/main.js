@@ -73,7 +73,7 @@ function simulate(){
   var UserWins = 0;
   var CPUWins = 0;
   var ties = 0;
-  for(var i = 0; i < 10; i++){
+  for(var i = 0; i < 1; i++){
     game.progressGame();
     if(game.recordWinner() === 'UserTeam'){
       UserWins++;
@@ -86,8 +86,8 @@ function simulate(){
     }
     game.reset();
   }
-  console.log('User: ' + UserWins);
-  console.log('CPU: ' + CPUWins);
-  console.log('ties: ' + ties);
-
+  $('#lower-half-div').append("<br>" + 'User: ' + UserWins);
+  $('#lower-half-div').append("<br>" + 'CPU: ' + CPUWins);
+  $('#lower-half-div').append("<br>" + 'ties: ' + ties);
+  //  var x = $('#lower-half-div').children().length;
 }

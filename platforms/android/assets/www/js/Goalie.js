@@ -8,8 +8,8 @@ var Goalie = {
     }
     else{
       var saveChance = (this.savePercentage - shot) * this.confidence;
-      console.log("Shot: " + shot);
-      console.log("Save Chance: " + saveChance);
+      $('#lower-half-div').append("<br>" + "Shot: " + shot);
+      $('#lower-half-div').append("<br>" + "Save Chance: " + saveChance);
       return Math.random() - this.consistency <= saveChance;//reduces effects of chance
     }
   }

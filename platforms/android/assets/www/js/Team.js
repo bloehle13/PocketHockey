@@ -24,7 +24,7 @@ var Team = {
     playerLastTouchedPuck: null,
     getShotInterval: function(){
       //equation returns about 30-45 shot attempts per game on average
-      return Math.floor((Math.random() + 0.1) * this.shotInterval / this.momentum);
+      return Math.floor(60*(Math.random() + 0.1) * this.shotInterval / this.momentum);
     },
     getRandomPlayer: function(){//gets a random player who is NOT the one who just had the puck
       var index = Math.floor(Math.random() * this.players.length);
@@ -91,19 +91,19 @@ var Team = {
         var diffHeight = 73 - height; //73 is average height, and thus the average screening attribute
         screenPlayer.screenNum += diffHeight / 100; //add or subtract screen effectiveness given height
         if(this.didScreenWork()){
-          console.log(screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
+          $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
           if(Math.random() < this.offensiveStrategies.tipping){//did the player tip the puck?
             if(Math.random() < screenPlayer.handEye){//how successful was the tip?
               screenPlayer.tip = true;
               screenPlayer.shot = Math.random() * screenPlayer.handEye/2;
-              console.log(screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);
+              $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);
               return screenPlayer;
             }
           }
           return screenPlayer;
         }
         else{
-          console.log(player.lastName + ' falied to screen')
+          $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' falied to screen')
           screenPlayer.screenNum = -0.05;
           return screenPlayer;
         }
@@ -119,9 +119,9 @@ var Team = {
     blockShot: function(player){
       if(Math.random() < this.defensiveStrategies.shotBlocking){//team tendancy tp shot block
         if(Math.random() < player.shotBlocking){//player abililty to shot block
-           console.log(player.lastName + ' blocked the shot')
+           $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' blocked the shot')
            if(Math.random() > player.durability){//if the player got hurt or not
-             console.log(player.lastName + ' got injured blocking the shot!');
+             $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' got injured blocking the shot!');
              this.setInjury(player.lastName);
              return true;
            }

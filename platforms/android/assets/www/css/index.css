@@ -16,7 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- #wrapper {
+
+#lower-half-div{
+   background-color: #ffffff;
+   height: 44vh;
+   padding: 10px;
+   margin: 10px;
+   overflow: scroll;
+ }
+
+
+#upper-half-div{
+  background-color: #ffee00;
+  height: 44vh;
+  margin-top: 10vh;
+}
+
+ /*Used for side menu movement*/
+#wrapper {
      padding-left: 0;
      -webkit-transition: all 0.5s ease;
      -moz-transition: all 0.5s ease;
@@ -105,28 +122,6 @@
      background: none;
  }
 
-
-.half-body-test{
-  background-color: #ffffff;
-  height: 46vh;
-}
-
-.half-body{
-  background-color: #ffee00;
-  float: left;
-  width: 100%;
-  flex-grow: 1;
-}
-
-.main-body{
-  height: 100%;
-  width: 100vw;
-  background-color: #ffee00;
-  position: absolute;
-  top: 8%;
-  bottom: 92%;
-}
-
 .pocket-hockey-title{/*title text for "Pocket Hockey"*/
   color: #ffffff;
 }
@@ -144,21 +139,32 @@
 }
 
 #title{
-  color: #ffffff;
+  color: #00258c;
+  font-size: 5vh;
+  margin: 0;
+}
+
+span.glyphicon-menu-hamburger{
+  font-size: 4vh;
+  padding: 0px;
+  margin-top: 0.5vh;
 }
 
 #menu-toggle{
-  margin-top: 10vh;
+  margin-top: 0;
+  z-index: 100000;
+  padding: 3px;
 }
 
 #page-header{/*Blue top border*/
-  border-color: transparent;
-  background-color: #00258c;
-  border-radius: 0px;
+  border-color: #f2f2f2;
+  background-color: #ffffff;
+  border-style: none none solid none;
+  border-width: 5px;
   height: 10vh;
   width: 100%;
   z-index: 100;
-  padding: 0px;
+  padding: 10px;
   margin: 0px;
   position: absolute;
   top: 0px;

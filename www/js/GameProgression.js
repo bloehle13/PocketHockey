@@ -2,10 +2,18 @@
 
 var GameProgression = {
 
-  gameTime: 60, //60 min
+  gameTime: 3600, //60 min
   UserTeamFaceoffs: 0,
   CPUTeamFaceoffs: 0,
   totalFaceoffs: 0,
+
+  getGameClock: function(){//formats a clock feel to the current game time
+    var min = Math.floor(this.gameTime / 60);
+    var formatedMin = ("0" + min).slice(-2);
+    var sec = Math.floor(this.gameTime % 60);
+    var formatedSec = ("0" + sec).slice(-2);
+    return(formatedMin + ":" + formatedSec);
+  },
 
   recordWinner: function(){
     if(UserTeam.goals > CPUTeam.goals){
@@ -20,7 +28,7 @@ var GameProgression = {
   reset: function(){
     UserTeam.reset();
     CPUTeam.reset();
-    this.gameTime = 60;
+    this.gameTime = 3600;
   },
 
   faceoff: function(){
@@ -50,25 +58,25 @@ var GameProgression = {
   progressGame: function(){
     while(this.gameTime > 0){
       if(this.faceoff() === UserTeam){
+        $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + "Team 1 wins faceoff");
         this.gameTime -= UserTeam.getShotInterval();
-        console.log("Team 1 wins faceoff");
         UserTeam.resetAssists();
         this.takeShot(UserTeam, CPUTeam);
       }
       if(this.faceoff() === CPUTeam){
+        $('#lower-half-div').append("<br>"  + this.getGameClock() + " - " + "Team 2 wins faceoff");
         this.gameTime -= CPUTeam.getShotInterval();
-        console.log("Team 2 wins faceoff");
         CPUTeam.resetAssists();
         this.takeShot(CPUTeam, UserTeam);
       }
     }
-    console.log('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves);
-    console.log('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves);
+    $('#lower-half-div').append('<br>Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves);
+    $('#lower-half-div').append('<br>Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves);
 
   },
 
   takeShot: function(oTeam, dTeam){
-    console.log("Current time in zone: " + oTeam.timeInZone);
+    $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + "Current time in zone: " + oTeam.timeInZone);
     var player = oTeam.getRandomPlayer();
     var shotLocation = player.getShot();
     var shootOrPass = oTeam.shootOrPass(shotLocation, player);
@@ -89,11 +97,11 @@ var GameProgression = {
             CPUTeam.playerLastTouchedPuck = playerShotBlock;
             var playerWithPuck = CPUTeam.getRandomPlayer();
             CPUTeam.addToAssist(playerWithPuck)//someone got the blocked shot
-            console.log(playerWithPuck.lastName + ' recovered the puck')
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + playerWithPuck.lastName + ' recovered the puck')
             this.takeShot(dTeam, oTeam);
           }
           else{
-            console.log(oTeam.name + ' got the puck back')
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + oTeam.name + ' got the puck back')
             this.takeShot(oTeam, dTeam);
           }
         }
@@ -103,11 +111,11 @@ var GameProgression = {
             UserTeam.playerLastTouchedPuck = playerShotBlock;
             var playerWithPuck = UserTeam.getRandomPlayer();
             UserTeam.addToAssist(playerWithPuck)//someone got the blocked shot
-            console.log(playerWithPuck.lastName + ' recovered the puck')
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + playerWithPuck.lastName + ' recovered the puck')
             this.takeShot(dTeam, oTeam);
           }
           else{
-            console.log(oTeam.name + ' got the puck back')
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + oTeam.name + ' got the puck back')
             this.takeShot(oTeam, dTeam);
           }
         }
@@ -136,14 +144,14 @@ var GameProgression = {
             UserTeam.shots++;
             UserTeam.shotAttempts++;
             UserTeam.resetAssists();
-            console.log(player.lastName + ' shoots, Team 2 makes the save');
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' shoots, Team 2 makes the save');
           }
           if(oTeam.name === 'CPUTeam'){
             UserTeam.saves++;
             CPUTeam.shots++;
             CPUTeam.shotAttempts++;
             CPUTeam.resetAssists();
-            console.log(player.lastName + ' shoots, Team 1 makes the save');
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' shoots, Team 1 makes the save');
           }
         }
         if(save === false){
@@ -152,24 +160,24 @@ var GameProgression = {
             UserTeam.goals++;
             UserTeam.shotAttempts++;
             UserTeam.timeInZone = 0;
-            console.log('\n\n\nTeam 1 scores! Goal by ' + player.lastName + '. ' + UserTeam.getAssists(player));
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + '\n\n\nTeam 1 scores! Goal by ' + player.lastName + '. ' + UserTeam.getAssists(player));
           }
           if(oTeam.name === 'CPUTeam'){
             CPUTeam.shots++;
             CPUTeam.goals++;
             CPUTeam.shotAttempts++;
             CPUTeam.timeInZone = 0;
-            console.log('\n\n\nTeam 2 score! Goal by ' + player.lastName + ' ' + CPUTeam.getAssists(player));
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + '\n\n\nTeam 2 score! Goal by ' + player.lastName + ' ' + CPUTeam.getAssists(player));
           }
         }
         if(save === null){
           if(oTeam.name === 'UserTeam'){
             UserTeam.shotAttempts++;
-            console.log(player.lastName + ' missed the net');
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' missed the net');
           }
           if(oTeam.name === 'CPUTeam'){
             CPUTeam.shotAttempts++;
-            console.log(player.lastName + ' missed the net');
+            $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' missed the net');
           }
         }
       }
@@ -183,14 +191,14 @@ var GameProgression = {
           UserTeam.timeInZone += 0.05;
           UserTeam.addToAssist(player);
           UserTeam.playerLastTouchedPuck = player;
-          console.log(player.lastName + ' made a pass');
+          $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' made a pass');
           this.takeShot(UserTeam, CPUTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone += 0.05;
           CPUTeam.addToAssist(player);
           CPUTeam.playerLastTouchedPuck = player;
-          console.log(player.lastName + ' made a pass');
+          $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' made a pass');
           this.takeShot(CPUTeam, UserTeam);
         }
       }
@@ -198,13 +206,13 @@ var GameProgression = {
         if(oTeam.name === 'UserTeam'){
           UserTeam.timeInZone = 0;
           UserTeam.resetAssists();
-          console.log(player.lastName + ' turned it over');
+          $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' turned it over');
           this.takeShot(CPUTeam, UserTeam);
         }
         if(oTeam.name === 'CPUTeam'){
           CPUTeam.timeInZone = 0;
           CPUTeam.resetAssists();
-          console.log(player.lastName + ' turned it over');
+          $('#lower-half-div').append("<br>" + this.getGameClock() + " - " + player.lastName + ' turned it over');
           this.takeShot(UserTeam, CPUTeam);
         }
       }
