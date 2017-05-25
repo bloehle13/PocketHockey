@@ -15,6 +15,7 @@ var Team = {
     goalie: goalie,
     offensiveStrategies: offensiveStrategies,
     defensiveStrategies: defensiveStrategies,
+    gameTickerMessage: "",
     timeInZone: 0,
     saves: 0,
     shotAttempts: 0,
@@ -91,19 +92,19 @@ var Team = {
         var diffHeight = 73 - height; //73 is average height, and thus the average screening attribute
         screenPlayer.screenNum += diffHeight / 100; //add or subtract screen effectiveness given height
         if(this.didScreenWork()){
-          $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
+          this.gameTickerMessage += (screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
           if(Math.random() < this.offensiveStrategies.tipping){//did the player tip the puck?
             if(Math.random() < screenPlayer.handEye){//how successful was the tip?
               screenPlayer.tip = true;
               screenPlayer.shot = Math.random() * screenPlayer.handEye/2;
-              $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);
+              this.gameTickerMessage += (screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);
               return screenPlayer;
             }
           }
           return screenPlayer;
         }
         else{
-          $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' falied to screen')
+          this.gameTickerMessage += (player.lastName + ' falied to screen')
           screenPlayer.screenNum = -0.05;
           return screenPlayer;
         }
@@ -119,16 +120,17 @@ var Team = {
     blockShot: function(player){
       if(Math.random() < this.defensiveStrategies.shotBlocking){//team tendancy tp shot block
         if(Math.random() < player.shotBlocking){//player abililty to shot block
-           $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' blocked the shot')
+           this.gameTickerMessage += (player.lastName + ' blocked the shot')
            if(Math.random() > player.durability){//if the player got hurt or not
-             $('#lower-half-div').append("<br>" + GameProgression.getGameClock() + " - " + player.lastName + ' got injured blocking the shot!');
+             this.gameTickerMessage += (' and got injured as a result');
              this.setInjury(player.lastName);
              return true;
            }
-        else return false;
+           else return true;
         }
-      else return false;
+        else return false;
       }
+      else return false;
     },
     setInjury: function(injuredName){
       for(var i = 0; i < this.players.length; i++){

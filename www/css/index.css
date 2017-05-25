@@ -19,7 +19,7 @@
 
 #lower-half-div{
    background-color: #ffffff;
-   height: 44vh;
+   height: 40vh;
    padding: 10px;
    margin: 10px;
    overflow: scroll;
@@ -28,8 +28,12 @@
 
 #upper-half-div{
   background-color: #ffee00;
-  height: 44vh;
+  height: 40vh;
   margin-top: 10vh;
+}
+
+#footer-div{
+  height: 6vh;
 }
 
  /*Used for side menu movement*/
