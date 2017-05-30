@@ -17,18 +17,22 @@
  * under the License.
  */
 
+#lower-half-div-wrapper{
+  background-color: #ffffff;
+}
+
 #lower-half-div{
    background-color: #ffffff;
-   height: 40vh;
+   height: 42vh;
    padding: 10px;
-   margin: 10px;
+   margin: 0px;
    overflow: scroll;
  }
 
 
 #upper-half-div{
   background-color: #ffee00;
-  height: 40vh;
+  height: 42vh;
   margin-top: 10vh;
 }
 
