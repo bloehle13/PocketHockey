@@ -84,7 +84,9 @@ function simulate(){
     else if(game.recordWinner() === 'tie'){
       ties++;
     }
-    game.reset();
+    game.printToTicker(GameProgression.messages);
+    //game.reset();
+
   }
   $('#lower-half-div').append("<br>" + 'User: ' + UserWins);
   $('#lower-half-div').append("<br>" + 'CPU: ' + CPUWins);
