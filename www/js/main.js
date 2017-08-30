@@ -19,6 +19,16 @@ $(document).ready(function() {
   $('#confidenceNumG').text('Confidence: ' + confidenceG);
   $('#consistencyNumG').text('Consistency: ' + consistencyG);
 });
+
+$('input[type="range"]').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+  }
+});
+
+
+
 $(document).on('input', '#shotPowerSlideF', function() {
     var shotPowerF = $('#shotPowerSlideF').val() / 100;
     forward1.shotPower = shotPowerF;

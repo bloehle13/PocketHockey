@@ -39,6 +39,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/rangeslider.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Pocket Hockey</title>
@@ -71,7 +72,7 @@
                 <li>
                     <a href="#">About</a>
                 </li>
-                <li> 
+                <li>
                     <a href="#">Services</a>
                 </li>
                 <li>
@@ -95,6 +96,33 @@
                     </div>
                     <!-- top half -->
                     <div class="col-lg-12" id="upper-half-div">
+                      <table>
+                        <tr>
+                          <td><input type="range"><p>Passing</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Shooting</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Shot Tipping</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Goalie Screening</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Team Aggresiveness</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Carrying Puck Into Zone</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range"><p>Dumping Puck Into Zone</p></td>
+                        </tr>
+
+
+                      </table>
+
+
 
                     </div>
 
@@ -107,6 +135,7 @@
                     <!-- Button row on bottom -->
                     <div class="col-lg-12" id="footer-div">
                         <a class="btn btn-primary" onclick="simulate()">Simulate</a>
+
                     </div>
                 </div>
             </div>
@@ -146,6 +175,7 @@
     <script type="text/javascript" src="js/UserTeam.js"></script>
     <script type="text/javascript" src="js/GameProgression.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/rangeslider.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript">
         app.initialize();
