@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
   var shotPowerF = $('#shotPowerSlideF').val() / 100;
   var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
   var confidenceF = $('#confidenceSlideF').val() / 100;
@@ -20,7 +21,71 @@ $(document).ready(function() {
   $('#consistencyNumG').text('Consistency: ' + consistencyG);
 });
 
-$('input[type="range"]').rangeslider({
+$('#passing').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    UserTeam.offensiveStrategies.passing = value/100;
+  }
+});
+
+$('#shooting').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+    UserTeam.offensiveStrategies.shooting = value/100;
+
+  }
+});
+
+$('#shotTipping').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+    UserTeam.offensiveStrategies.tipping = value/100;
+
+  }
+});
+
+$('#goalieScreening').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+    UserTeam.offensiveStrategies.screening = value/100;
+
+  }
+});
+
+$('#shotBlocking').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+    UserTeam.offensiveStrategies.shotBlocking = value/100;
+
+  }
+});
+
+$('#teamAgressiveness').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(UserTeam);
+    UserTeam.offensiveStrategies.aggresiveness = value/100;
+
+  }
+});
+
+/*
+
+
+NEEDS TO BE IMPLEMENTED STILL
+*/
+$('#carryingPuck').rangeslider({
+  polyfill: false,
+  onSlide: function(position, value) {
+    console.log(value);
+  }
+});
+
+$('#dumpingPuck').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
