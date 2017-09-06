@@ -73,6 +73,18 @@ $('#teamAgressiveness').rangeslider({
   }
 });
 
+var upperHalfGestures = new Hammer(document.getElementById('upper-half-div'));
+upperHalfGestures.on('swipe', function(ev){
+  if(ev.target.td !== null){
+    console.log(true);
+  }else{
+    console.log(false);
+  }
+    console.log(ev);
+});
+
+
+
 /*
 
 
