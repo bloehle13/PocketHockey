@@ -64,6 +64,8 @@ $('#shotBlocking').rangeslider({
   }
 });
 
+
+
 $('#teamAgressiveness').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
@@ -80,7 +82,8 @@ upperHalfGestures.on('swipe', function(ev){
   }else{
     console.log(false);
   }
-    console.log(ev);
+  var string = ev.target.innerHTML;
+    console.log(string.indexOf('rangeslider'));
 });
 
 

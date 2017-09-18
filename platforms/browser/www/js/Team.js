@@ -11,7 +11,7 @@ defensiveStrategies.shotBlocking = 0.5;
 var Team = {
 
     momentum: 1,
-    shotInterval: 3,//range of minutes between shots
+    shotInterval: 2,//range of minutes between shots
     goalie: goalie,
     offensiveStrategies: offensiveStrategies,
     defensiveStrategies: defensiveStrategies,
@@ -23,9 +23,18 @@ var Team = {
     name: 'N/A',
     assistPlayers: [null, null],
     playerLastTouchedPuck: null,
+    getBlockInterval: function(){
+      return (Math.random() * (10 - this.offensiveStrategies.aggresiveness));
+    },
+    getFaceoffInterval: function(){
+      return (Math.random() * 5);
+    },
+    getPassInterval: function(){
+      return (20 * Math.random() * this.offensiveStrategies.passing);
+    },
     getShotInterval: function(){
       //equation returns about 30-45 shot attempts per game on average
-      return Math.floor(60*(Math.random() + 0.1) * this.shotInterval / this.momentum);
+      return (20 * (Math.random() + 0.1) * this.shotInterval / this.momentum);
     },
     getRandomPlayer: function(){//gets a random player who is NOT the one who just had the puck
       var index = Math.floor(Math.random() * this.players.length);

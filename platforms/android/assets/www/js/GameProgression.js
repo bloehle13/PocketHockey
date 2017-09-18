@@ -1,4 +1,5 @@
-
+//STATIC VARIABLES DECLARATION
+var GAME_PROGRESSION_RATE = 1000;//in ms
 
 var GameProgression = {
 
@@ -6,6 +7,23 @@ var GameProgression = {
   UserTeamFaceoffs: 0,
   CPUTeamFaceoffs: 0,
   totalFaceoffs: 0,
+  messages: [],
+
+  addToMessageQueue: function(message){//adds to array of messages to be printed to ticker
+    if(this.getGameClock().indexOf('-') === -1){//prevents printing out a negative time
+      this.messages.push(this.getGameClock() + ' - ' + message);
+    }
+  },
+
+  printToTicker: function(messages){//takes a message and formats it to be posted to the ticker
+    console.log(messages.length);
+      $('#lower-half-div').append(messages.shift());
+
+      if(messages.length > 0){
+        setTimeout(function(){GameProgression.printToTicker(messages)}, GAME_PROGRESSION_RATE);
+      }
+
+  },
 
   getGameClock: function(){//formats a clock feel to the current game time
     var min = Math.floor(this.gameTime / 60);
@@ -66,16 +84,16 @@ var GameProgression = {
 
       if(this.faceoff() === UserTeam){
 
-        $('#lower-half-div').append(this.getGameClock() + " - " + "Team 1 wins faceoff" + "<br>");
-        this.gameTime -= UserTeam.getShotInterval();
+        this.addToMessageQueue("Team 1 wins faceoff" + "<br>");
+        this.gameTime -= UserTeam.getFaceoffInterval();
         UserTeam.resetAssists();
         this.takeShot(UserTeam, CPUTeam);
 
       }
       if(this.faceoff() === CPUTeam){
 
-        $('#lower-half-div').append(this.getGameClock() + " - " + "Team 2 wins faceoff" + "<br>");
-        this.gameTime -= CPUTeam.getShotInterval();
+        this.addToMessageQueue("Team 2 wins faceoff" + "<br>");
+        this.gameTime -= CPUTeam.getFaceoffInterval();
         CPUTeam.resetAssists();
         this.takeShot(CPUTeam, UserTeam);
 
@@ -89,14 +107,14 @@ var GameProgression = {
   },
 
   takeShot: function(oTeam, dTeam){
-    $('#lower-half-div').append(this.getGameClock() + " - " + "Current time in zone: " + oTeam.timeInZone + "<br>");
+    //this.addToMessageQueue("Current time in zone: " + oTeam.timeInZone + "<br>");
     var player = oTeam.getRandomPlayer();
     var shotLocation = player.getShot();
     var shootOrPass = oTeam.shootOrPass(shotLocation, player);
 
     //HANDLING SHOOTING
     if(shootOrPass === 'Shoot'){
-
+      this.gameTime -= oTeam.getShotInterval();
       var shot = player.shoot(shotLocation) + oTeam.timeInZone;
 
       if(player.injured){//shot is not as effective if injured
@@ -111,8 +129,9 @@ var GameProgression = {
 
         if(dTeam.gameTickerMessage !== ""){
 
-            $('#lower-half-div').append(this.getGameClock() + " - " + dTeam.gameTickerMessage + "<br>");
+            this.addToMessageQueue(dTeam.gameTickerMessage + "<br>");
             dTeam.gameTickerMessage = "";
+            this.gameTime -= dTeam.getBlockInterval();
 
         }
 
@@ -123,13 +142,13 @@ var GameProgression = {
           dTeam.playerLastTouchedPuck = playerShotBlock;
           var playerWithPuck = dTeam.getRandomPlayer();
           dTeam.addToAssist(playerWithPuck)//someone got the blocked shot
-          $('#lower-half-div').append(this.getGameClock() + " - " + playerWithPuck.lastName + ' recovered the puck' + "<br>")
+          this.addToMessageQueue(playerWithPuck.lastName + ' recovered the puck' + "<br>")
           this.takeShot(dTeam, oTeam);
 
         }
         else{
 
-          $('#lower-half-div').append(this.getGameClock() + " - " + oTeam.name + ' got the puck back' + "<br>")
+          this.addToMessageQueue(oTeam.name + ' got the puck back' + "<br>")
           this.takeShot(oTeam, dTeam);
 
         }
@@ -144,7 +163,7 @@ var GameProgression = {
 
           if (oTeam.gameTickerMessage !== "" && screenPlayer !== null){
 
-            $('#lower-half-div').append(this.getGameClock() + " - " + oTeam.gameTickerMessage + "<br>");
+            this.addToMessageQueue(oTeam.gameTickerMessage + "<br>");
             oTeam.gameTickerMessage = "";
 
           }
@@ -168,7 +187,7 @@ var GameProgression = {
           oTeam.shots++;
           oTeam.shotAttempts++;
           oTeam.resetAssists();
-          $('#lower-half-div').append(this.getGameClock() + " - " + player.lastName + ' shoots, ' + dTeam.name + ' makes the save' + "<br>");
+          this.addToMessageQueue(player.lastName + ' shoots, ' + dTeam.name + ' makes the save' + "<br>");
 
         }
         if(save === false){
@@ -177,13 +196,13 @@ var GameProgression = {
           oTeam.goals++;
           oTeam.shotAttempts++;
           oTeam.timeInZone = 0;
-          $('#lower-half-div').append(this.getGameClock() + " - " + oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
+          this.addToMessageQueue(oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
 
         }
         if(save === null){
 
           oTeam.shotAttempts++;
-          $('#lower-half-div').append(this.getGameClock() + " - " + player.lastName + ' missed the net' + "<br>");
+          this.addToMessageQueue(player.lastName + ' missed the net' + "<br>");
 
         }
       }
@@ -191,13 +210,13 @@ var GameProgression = {
 
     //HANDLING PASSING
     if(shootOrPass === 'Pass'){
-      this.gameTime -= 0.1;
+      this.gameTime -= oTeam.getPassInterval();
       if(Math.random() < player.passing){
 
           oTeam.timeInZone += 0.05;
           oTeam.addToAssist(player);
           oTeam.playerLastTouchedPuck = player;
-          $('#lower-half-div').append(this.getGameClock() + " - " + player.lastName + ' made a pass' + "<br>");
+          this.addToMessageQueue(player.lastName + ' made a pass' + "<br>");
           this.takeShot(oTeam, dTeam);
 
       }
@@ -205,7 +224,7 @@ var GameProgression = {
 
         oTeam.timeInZone = 0;
         oTeam.resetAssists();
-        $('#lower-half-div').append(this.getGameClock() + " - " + player.lastName + ' turned it over' + "<br>");
+        this.addToMessageQueue(player.lastName + ' turned it over' + "<br>");
         this.takeShot(dTeam, oTeam);
 
       }
