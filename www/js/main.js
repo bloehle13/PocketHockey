@@ -31,7 +31,6 @@ $('#passing').rangeslider({
   }
 
 
-  asdfasdfsd
 });
 
 $('#shooting').rangeslider({
