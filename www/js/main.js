@@ -32,7 +32,6 @@ ider({
   }
 
 
-  asdfasdfsd
 });
 
 $('#shooting').rangeslider({
