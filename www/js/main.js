@@ -24,7 +24,8 @@ $(document).ready(function() {
   $('#consistencyNumG').text('Consistency: ' + consistencyG);
 });
 
-$('#passing').rangeslider({
+$('#passing').rangesl
+ider({
   polyfill: false,
   onSlide: function(position, value) {
     UserTeam.offensiveStrategies.passing = value/100;
