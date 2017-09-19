@@ -27,7 +27,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -39,6 +39,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/rangeslider.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <title>Pocket Hockey</title>
@@ -93,14 +94,51 @@
                           </a>
                         </h1>
                     </div>
+                    <!-- top half -->
                     <div class="col-lg-12" id="upper-half-div">
+                      <table>
+                        <tr>
+                          <td><input type="range" id="passing"><p>Passing</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="shooting"><p>Shooting</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="shotTipping"><p>Shot Tipping</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="goalieScreening"><p>Goalie Screening</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="shotBlocking"><p>Shot Blocking</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="teamAgressiveness"><p>Team Aggresiveness</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="carryingPuck"><p>Carrying Puck Into Zone</p></td>
+                        </tr>
+                        <tr>
+                          <td><input type="range" id="dumpingPuck"><p>Dumping Puck Into Zone</p></td>
+                        </tr>
+
+
+                      </table>
+
+
 
                     </div>
-                    <div class="col-lg-12 well well-lg" id="lower-half-div">
 
+                    <!-- action ticker -->
+                    <div class="col-lg-12" id="lower-half-div-wrapper">
+                      <div class="well well-lg" id="lower-half-div">
+                      </div>
                     </div>
+
+                    <!-- Button row on bottom -->
                     <div class="col-lg-12" id="footer-div">
                         <a class="btn btn-primary" onclick="simulate()">Simulate</a>
+
                     </div>
                 </div>
             </div>
@@ -114,7 +152,6 @@
     <script>
     $('#menu-toggle').click(function(event) {
         event.preventDefault();
-        simulate();
         $('#wrapper').addClass('toggled');
         $('#wrapper').focus();
     });
@@ -141,6 +178,9 @@
     <script type="text/javascript" src="js/UserTeam.js"></script>
     <script type="text/javascript" src="js/GameProgression.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/rangeslider.min.js"></script>
+    <script type="text/javascript" src="js/hammer-time.min.js"></script>
+    <script type="text/javascript" src="js/hammer.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript">
         app.initialize();

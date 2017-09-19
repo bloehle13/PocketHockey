@@ -17,19 +17,37 @@
  * under the License.
  */
 
+table{
+  width: 100%;
+}
+
+/*The labels on each of the sliders
+*/
+#upper-half-div table tr td p{
+  text-align: center;
+  margin-top: 1vh;
+  margin-bottom: -1vh;
+  font-size: 15px;
+}
+
+#lower-half-div-wrapper{
+  background-color: #ffffff;
+}
+
 #lower-half-div{
    background-color: #ffffff;
-   height: 40vh;
+   height: 42vh;
    padding: 10px;
-   margin: 10px;
+   margin: 0px;
    overflow: scroll;
  }
 
 
 #upper-half-div{
-  background-color: #ffee00;
-  height: 40vh;
+  background-color: #ccffff;
+  height: 42vh;
   margin-top: 10vh;
+  overflow-y: scroll;
 }
 
 #footer-div{

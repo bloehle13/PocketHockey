@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+
+/*my litle git test
+*/
   var shotPowerF = $('#shotPowerSlideF').val() / 100;
   var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
   var confidenceF = $('#confidenceSlideF').val() / 100;
@@ -67,6 +70,8 @@ $('#shotBlocking').rangeslider({
   }
 });
 
+
+
 $('#teamAgressiveness').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
@@ -83,7 +88,8 @@ upperHalfGestures.on('swipe', function(ev){
   }else{
     console.log(false);
   }
-    console.log(ev);
+  var string = ev.target.innerHTML;
+    console.log(string.indexOf('rangeslider'));
 });
 
 
