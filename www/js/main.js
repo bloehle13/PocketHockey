@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+
+/*my litle git test
+*/
   var shotPowerF = $('#shotPowerSlideF').val() / 100;
   var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
   var confidenceF = $('#confidenceSlideF').val() / 100;
