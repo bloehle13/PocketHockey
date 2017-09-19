@@ -26,6 +26,9 @@ $('#passing').rangeslider({
   onSlide: function(position, value) {
     UserTeam.offensiveStrategies.passing = value/100;
   }
+
+
+  asdfasdfsd
 });
 
 $('#shooting').rangeslider({
