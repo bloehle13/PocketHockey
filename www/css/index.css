@@ -17,13 +17,33 @@
  * under the License.
  */
 
+#line-management-current-line p{
+  font-size: 12px;
+  margin-top: 1vh;
+}
+
+ #current-lineup-goalie td, #current-lineup-d td, #current-lineup-fwds td{
+   width: 33%;
+   height: 10vh;
+ }
+
+#current-lineup-goalie div, #current-lineup-d div, #current-lineup-fwds div{
+  text-align: center;
+  border: 1px solid black;
+}
+
+#current-lineup-fwds div{
+  width: 100%;
+  text-align: center;
+}
+
 table{
   width: 100%;
 }
 
 /*The labels on each of the sliders
 */
-#upper-half-div table tr td p{
+#team-sliders tr td p{
   text-align: center;
   margin-top: 1vh;
   margin-bottom: -1vh;
