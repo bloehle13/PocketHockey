@@ -17,9 +17,15 @@
  * under the License.
  */
 
+.progress-bar{
+  background-color: green;
+}
+
 #line-management-current-line p{
   font-size: 12px;
-  margin-top: 1vh;
+  margin-top: 0vh;
+  margin-bottom: 0vh;
+  font-size: 12px;
 }
 
  #current-lineup-fwds td{
@@ -40,10 +46,10 @@
 #current-lineup-goalie div, #current-lineup-d div, #current-lineup-fwds div{
   text-align: center;
   border: 2px solid black;
-  border-style: outset;
+  border-style: double;
   margin: 0 auto;
   margin-bottom: 1vh;
-  width: 80%
+  width: 80%;
 
 }
 

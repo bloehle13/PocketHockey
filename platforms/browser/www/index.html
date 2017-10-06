@@ -58,25 +58,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="#" onclick="lineManagement()">Line Management</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="#" onclick="teamSliders()">Team Sliders</a>
                 </li>
                 <li>
-                    <a href="#">Overview</a>
+                    <a href="#">Action Tracker</a>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a href="#">Game Stats</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Quit</a>
                 </li>
             </ul>
         </div>
@@ -94,9 +88,11 @@
                           </a>
                         </h1>
                     </div>
+
                     <!-- top half -->
                     <div class="col-lg-12" id="upper-half-div">
-                      <table>
+                        <!-- sliders -->
+                      <table id="team-sliders">
                         <tr>
                           <td><input type="range" id="passing"><p>Passing</p></td>
                         </tr>
@@ -104,28 +100,160 @@
                           <td><input type="range" id="shooting"><p>Shooting</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="shotTipping"><p>Shot Tipping</p></td>
+                          <td><input type="range" id="shot-tipping"><p>Shot Tipping</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="goalieScreening"><p>Goalie Screening</p></td>
+                          <td><input type="range" id="goalie-screening"><p>Goalie Screening</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="shotBlocking"><p>Shot Blocking</p></td>
+                          <td><input type="range" id="shot-blocking"><p>Shot Blocking</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="teamAgressiveness"><p>Team Aggresiveness</p></td>
+                          <td><input type="range" id="team-agressiveness"><p>Team Aggresiveness</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="carryingPuck"><p>Carrying Puck Into Zone</p></td>
+                          <td><input type="range" id="carrying-puck"><p>Carrying Puck Into Zone</p></td>
                         </tr>
                         <tr>
-                          <td><input type="range" id="dumpingPuck"><p>Dumping Puck Into Zone</p></td>
+                          <td><input type="range" id="dumping-puck"><p>Dumping Puck Into Zone</p></td>
                         </tr>
-
-
                       </table>
 
 
+                      <!-- end of sliders -->
+                      <div id="line-management">
+
+                        <!--Holds the current linup -->
+                        <div id="line-management-current-line">
+
+                          <table id="current-lineup-fwds">
+
+                            <tr>
+                              <td>
+                                <div>
+                                  <p id="pos-forward-left"><u>Left Forward</u></p>
+                                  <p id="name-forward-left">Mats<br> Zuccarello</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-left" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <p id="pos-forward-center"><u>Center</u></p>
+                                  <p id="name-forward-center">Kevin<br> Hayes</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-center" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <p id="pos-forward-right"><u>Right Forward</u></p>
+                                  <p id="name-forward-right">Rick<br> Nash</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-right" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+
+                          </table>
+
+                          <table id="current-lineup-d">
+                            <tr>
+                              <td>
+                                <div>
+                                  <p id="pos-defense-left"><u>Left Defense</u></p>
+                                  <p id="name-defense-left">Brady Skeji</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-defense-left" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <p id="pos-defense-right"><u>Right Defense</u></p>
+                                  <p id="name-defense-right">Ryan McDonough</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-defense-right" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+
+                          <table id="current-lineup-goalie">
+                            <tr>
+                              <td>
+                                <div>
+                                  <p id="pos-goalie"><u>Goalie</u></p>
+                                  <p id="name-goalie">Henrik Lundqvist</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-goalie" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+
+                          </table>
+
+                        </div>
+
+                        <!--Holds the buttons for swapping linups -->
+                        <div id="line-management-line-swap">
+                          <table>
+                            <tr>
+
+                              <td>
+                                <p>Forward Lines</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary" onclick="line1()">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                  <button type="button" class="btn btn-secondary">3</button>
+                                  <button type="button" class="btn btn-secondary">4</button>
+                                </div>
+                              </td>
+
+                              <td>
+                                <p>Defensive Pairs</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                  <button type="button" class="btn btn-secondary">3</button>
+                                </div>
+                              </td>
+
+                              <td>
+                                <p>Goalies</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                </div>
+                              </td>
+
+                            </tr>
+                          </table>
+
+
+
+
+                        </div>
+                      </div>
+
+                      <div id="action-tracker">
+                        hello
+                      </div>
+
+                      <div id="game-stats">
+                        hello
+                      </div>
 
                     </div>
 
@@ -176,6 +304,8 @@
     <script type="text/javascript" src="js/Team.js"></script>
     <script type="text/javascript" src="js/CPUTeam.js"></script>
     <script type="text/javascript" src="js/UserTeam.js"></script>
+    <script type="text/javascript" src="js/Navigation.js"></script>
+    <script type="text/javascript" src="js/LineManagementu.js"></script>
     <script type="text/javascript" src="js/GameProgression.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/rangeslider.min.js"></script>

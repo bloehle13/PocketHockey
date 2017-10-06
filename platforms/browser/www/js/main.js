@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+
+/*my litle git test
+*/
   var shotPowerF = $('#shotPowerSlideF').val() / 100;
   var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
   var confidenceF = $('#confidenceSlideF').val() / 100;
@@ -26,6 +29,8 @@ $('#passing').rangeslider({
   onSlide: function(position, value) {
     UserTeam.offensiveStrategies.passing = value/100;
   }
+
+
 });
 
 $('#shooting').rangeslider({
@@ -37,7 +42,7 @@ $('#shooting').rangeslider({
   }
 });
 
-$('#shotTipping').rangeslider({
+$('#shot-tipping').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
@@ -46,7 +51,7 @@ $('#shotTipping').rangeslider({
   }
 });
 
-$('#goalieScreening').rangeslider({
+$('#goalie-screening').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
@@ -55,7 +60,7 @@ $('#goalieScreening').rangeslider({
   }
 });
 
-$('#shotBlocking').rangeslider({
+$('#shot-blocking').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
@@ -64,7 +69,9 @@ $('#shotBlocking').rangeslider({
   }
 });
 
-$('#teamAgressiveness').rangeslider({
+
+
+$('#team-agressiveness').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(UserTeam);
@@ -91,14 +98,14 @@ upperHalfGestures.on('swipe', function(ev){
 
 NEEDS TO BE IMPLEMENTED STILL
 */
-$('#carryingPuck').rangeslider({
+$('#carrying-puck').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
   }
 });
 
-$('#dumpingPuck').rangeslider({
+$('#dumping-puck').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);

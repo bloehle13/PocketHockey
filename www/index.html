@@ -123,6 +123,7 @@
                       <!-- end of sliders -->
                       <div id="line-management">
 
+                        <!--Holds the current linup -->
                         <div id="line-management-current-line">
 
                           <table id="current-lineup-fwds">
@@ -130,23 +131,32 @@
                             <tr>
                               <td>
                                 <div>
-                                  <p id="pos-forward-left">Left Forward</p>
-                                  <p id="name-forward-left">Mats Zuccarello</p>
-                                  <p id="fatigue-forward-left">Energy: 100%</p>
+                                  <p id="pos-forward-left"><u>Left Forward</u></p>
+                                  <p id="name-forward-left">Mats<br> Zuccarello</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-left" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                               <td>
                                 <div>
-                                  <p id="pos-forward-right">Center</p>
-                                  <p id="name-forward-right">Kevin Hayes</p>
-                                  <p id="fatigue-forward-right">Energy: 100%</p>
+                                  <p id="pos-forward-center"><u>Center</u></p>
+                                  <p id="name-forward-center">Kevin<br> Hayes</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-center" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                               <td>
                                 <div>
-                                  <p id="pos-forward-right">Right Forward</p>
-                                  <p id="name-forward-right">Rick Nash</p>
-                                  <p id="fatigue-forward-right">Energy: 100%</p>
+                                  <p id="pos-forward-right"><u>Right Forward</u></p>
+                                  <p id="name-forward-right">Rick<br> Nash</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-forward-right" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -157,16 +167,22 @@
                             <tr>
                               <td>
                                 <div>
-                                  <p id="pos-defense-left">Left Defense</p>
+                                  <p id="pos-defense-left"><u>Left Defense</u></p>
                                   <p id="name-defense-left">Brady Skeji</p>
-                                  <p id="fatigue-defense-left">Energy: 100%</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-defense-left" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                               <td>
                                 <div>
-                                  <p id="pos-defense-right">Right Defense</p>
+                                  <p id="pos-defense-right"><u>Right Defense</u></p>
                                   <p id="name-defense-right">Ryan McDonough</p>
-                                  <p id="fatigue-defense-right">Energy: 100%</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-defense-right" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -176,9 +192,12 @@
                             <tr>
                               <td>
                                 <div>
-                                  <p id="pos-goalie">Goalie</p>
+                                  <p id="pos-goalie"><u>Goalie</u></p>
                                   <p id="name-goalie">Henrik Lundqvist</p>
-                                  <p id="ability-goalie">Composure: 100%</p>
+                                  <div class="progress">
+                                    <div id="fatigue-progress-bar-goalie" class="progress-bar" role="progressbar" style="width: 25%;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -187,7 +206,44 @@
 
                         </div>
 
-                        <div id="line-management-right-side">
+                        <!--Holds the buttons for swapping linups -->
+                        <div id="line-management-line-swap">
+                          <table>
+                            <tr>
+
+                              <td>
+                                <p>Forward Lines</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary" onclick="line1()">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                  <button type="button" class="btn btn-secondary">3</button>
+                                  <button type="button" class="btn btn-secondary">4</button>
+                                </div>
+                              </td>
+
+                              <td>
+                                <p>Defensive Pairs</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                  <button type="button" class="btn btn-secondary">3</button>
+                                </div>
+                              </td>
+
+                              <td>
+                                <p>Goalies</p>
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                  <button type="button" class="btn btn-secondary">1</button>
+                                  <button type="button" class="btn btn-secondary">2</button>
+                                </div>
+                              </td>
+
+                            </tr>
+                          </table>
+
+
+
+
                         </div>
                       </div>
 
@@ -249,6 +305,7 @@
     <script type="text/javascript" src="js/CPUTeam.js"></script>
     <script type="text/javascript" src="js/UserTeam.js"></script>
     <script type="text/javascript" src="js/Navigation.js"></script>
+    <script type="text/javascript" src="js/LineManagementu.js"></script>
     <script type="text/javascript" src="js/GameProgression.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/rangeslider.min.js"></script>
