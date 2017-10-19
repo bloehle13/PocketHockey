@@ -11,6 +11,7 @@ var Player = {
   faceoffs: 0.5,
   passingShootingDiff: 0, //slider difference, 0 means slider in middle
   height: 73, //in inches
+  energy: 1, //out of 0-1
   shoot: function(shotLocation){
     var shotWide = this.missTheNet();
     if(shotWide){
@@ -32,6 +33,38 @@ var Player = {
   missTheNet: function(){
     //30% chance of missing the net
     return Math.random() <= 0.25;
+  },
+  drainEnergy: function(eventType){//drain engergy based on event type
+    switch(eventType){
+      case 'shoot':
+        this.energy = 0;
+        console.log(this.energy);
+        break;
+      case 'pass':
+        this.energy = 0.1;
+        console.log(this.energy);
+        break;
+      case 'blockShot':
+        this.energy = 0.2;
+        console.log(this.energy);
+        break;
+      case 'turnover':
+        this.energy = 0.3;
+        console.log(this.energy);
+        break;
+      case 'faceoff':
+        this.energy = 0.4;
+        console.log(this.energy);
+        break;
+      case 'screen':
+        this.energy = 0.5;
+        console.log(this.energy);
+        break;
+      case 'tip':
+        this.energy = 0.6;
+        console.log(this.energy);
+        break;
+    }
   }
 }
 

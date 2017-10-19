@@ -96,6 +96,7 @@ var Team = {
         tip: false
       };//by default screening will have no effect
       if(Math.random() < this.offensiveStrategies.screening){
+        player.drainEnergy('screen');
         screenPlayer.screenNum = 0.05;
         var height  = screenPlayer.height;
         var diffHeight = 73 - height; //73 is average height, and thus the average screening attribute
@@ -104,6 +105,7 @@ var Team = {
           this.gameTickerMessage += (screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
           if(Math.random() < this.offensiveStrategies.tipping){//did the player tip the puck?
             if(Math.random() < screenPlayer.handEye){//how successful was the tip?
+              player.drainEnergy('tip');
               screenPlayer.tip = true;
               screenPlayer.shot = Math.random() * screenPlayer.handEye/2;
               this.gameTickerMessage += (screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);

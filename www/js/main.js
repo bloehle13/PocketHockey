@@ -2,6 +2,8 @@
 $(document).ready(function() {
 
 
+  $('#fatigue-progress-bar-forward-left').css('width','100%');
+
 /*my litle git test
 */
   var shotPowerF = $('#shotPowerSlideF').val() / 100;

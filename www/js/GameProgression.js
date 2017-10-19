@@ -117,6 +117,8 @@ var GameProgression = {
       this.gameTime -= oTeam.getShotInterval();
       var shot = player.shoot(shotLocation) + oTeam.timeInZone;
 
+      player.drainEnergy('shoot');
+
       if(player.injured){//shot is not as effective if injured
 
         shot /= 4;
@@ -132,6 +134,7 @@ var GameProgression = {
             this.addToMessageQueue(dTeam.gameTickerMessage + "<br>");
             dTeam.gameTickerMessage = "";
             this.gameTime -= dTeam.getBlockInterval();
+            playerShotBlock.drainEnergy('blockShot');
 
         }
 
@@ -217,6 +220,7 @@ var GameProgression = {
           oTeam.addToAssist(player);
           oTeam.playerLastTouchedPuck = player;
           this.addToMessageQueue(player.lastName + ' made a pass' + "<br>");
+          player.drainEnergy('pass');
           this.takeShot(oTeam, dTeam);
 
       }
@@ -225,6 +229,7 @@ var GameProgression = {
         oTeam.timeInZone = 0;
         oTeam.resetAssists();
         this.addToMessageQueue(player.lastName + ' turned it over' + "<br>");
+        player.drainEnergy('turnover');
         this.takeShot(dTeam, oTeam);
 
       }
