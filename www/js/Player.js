@@ -34,7 +34,7 @@ var Player = {
     //30% chance of missing the net
     return Math.random() <= 0.25;
   },
-  drainEnergy: function(eventType){//drain engergy based on event type
+  drainEnergy: function(eventType){//drain energy based on event type
     switch(eventType){
       case 'shoot':
         this.energy = 0;
