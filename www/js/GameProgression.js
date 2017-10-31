@@ -1,5 +1,6 @@
 //STATIC VARIABLES DECLARATION
 var GAME_PROGRESSION_RATE = 1000;//in ms
+var GAME_PROGRESSION_RATE_MODIFIER = 1;
 
 var GameProgression = {
 
@@ -16,7 +17,14 @@ var GameProgression = {
   },
 
   printOnceToTicker: function(message){
-    $('#lower-half-div').append(message);
+    var gameClock = this.getGameClock();
+
+    if(gameClock.indexOf('-') === -1){//game time is not negative, so it's valid
+      $('#lower-half-div').append(this.getGameClock() + ': ' + message);
+      $('#lower-half-div').animate({scrollTop: $('#lower-half-div').get(0).scrollHeight}, 10);
+    }else{
+      //GAME IS OVER
+    }
   },
 
   printToTicker: function(messages){//takes a message and formats it to be posted to the ticker
@@ -24,7 +32,7 @@ var GameProgression = {
       $('#lower-half-div').append(messages.shift());
 
       if(messages.length > 0){
-        setTimeout(function(){GameProgression.printToTicker(messages)}, GAME_PROGRESSION_RATE);
+        setTimeout(function(){GameProgression.printToTicker(messages)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
       }
 
   },
@@ -85,13 +93,18 @@ var GameProgression = {
     else this.faceoff();
   },
 
-  progressGame: function(){
-    var userTeamHasPuck = false;
-    var cpuTeamHasPuck = false;
+  beginGame: function(){
+    this.progressGame(false, false);//neither team starts with puck
+  },
 
-    while(this.gameTime > 0){
-      console.log('UserTeam: ' + userTeamHasPuck);
-      console.log('CPUTeam: ' + cpuTeamHasPuck);
+  progressGame: function(userTeamPosession, cpuTeamPosession){
+
+    var userTeamHasPuck = userTeamPosession;
+    var cpuTeamHasPuck = cpuTeamPosession;
+
+    //while(this.gameTime > 0){
+      //console.log('UserTeam: ' + userTeamHasPuck);
+      //console.log('CPUTeam: ' + cpuTeamHasPuck);
 
       var teamWithPuck = null;
 
@@ -144,10 +157,15 @@ var GameProgression = {
         cpuTeamHasPuck = false;
       }
 
+    //}
+
+    if(this.gameTime> 0){
+      setTimeout(function(){GameProgression.progressGame(userTeamHasPuck, cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
+    }else{
+      $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
+      $('#lower-half-div').append('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
     }
 
-    $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
-    $('#lower-half-div').append('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
 
   },
 

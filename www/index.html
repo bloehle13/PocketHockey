@@ -267,6 +267,26 @@
                     <div class="col-lg-12" id="footer-div">
                         <a class="btn btn-primary" onclick="simulate()">Simulate</a>
 
+                        <!-- Simulation speed div -->
+                        <div class="btn-group" data-toggle="buttons">
+                          <label class="btn btn-primary active">
+                            <input type="radio" name="simSpeedOptions" id="simSpeedOption1x" autocomplete="off" checked> 1x Speed
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="radio" name="simSpeedOptions" id="simSpeedOption2x" autocomplete="off"> 2x Speed
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="radio" name="simSpeedOptions" id="simSpeedOption3x" autocomplete="off"> 3x Speed
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="radio" name="simSpeedOptions" id="simSpeedOption10x" autocomplete="off"> 10x Speed
+                          </label>
+                        </div>
+
+                        <a class="btn btn-warning" onclick="simulate()">Pause</a>
+
+                        <a class="btn btn-danger" onclick="simulate()">Quit</a>
+
                     </div>
                 </div>
             </div>

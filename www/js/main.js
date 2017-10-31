@@ -165,13 +165,32 @@ $(document).on('input', '#consistencySlideG', function() {
     $('#consistencyNumG').text('Consistency: ' + consistencyG);
 });
 
+//Handles simulation speed modifiers
+$('input[id="simSpeedOption1x"]').change( function() {
+  GAME_PROGRESSION_RATE_MODIFIER = 1;
+});
+
+$('input[id="simSpeedOption2x"]').change( function() {
+  GAME_PROGRESSION_RATE_MODIFIER = 2;
+});
+
+$('input[id="simSpeedOption3x"]').change( function() {
+  GAME_PROGRESSION_RATE_MODIFIER = 3;
+});
+
+$('input[id="simSpeedOption10x"]').change( function() {
+  GAME_PROGRESSION_RATE_MODIFIER = 10;
+});
+/////////////////////////////////////////////////////////
+
+var game = Object.create(GameProgression);//universal game object
+
 function simulate(){
-  var game = Object.create(GameProgression);
   var UserWins = 0;
   var CPUWins = 0;
   var ties = 0;
   for(var i = 0; i < 1; i++){
-    game.progressGame();
+    game.beginGame();
     if(game.recordWinner() === 'UserTeam'){
       UserWins++;
     }
