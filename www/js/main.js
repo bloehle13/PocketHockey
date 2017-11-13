@@ -182,8 +182,12 @@ $('input[id="simSpeedOption10x"]').change( function() {
   GAME_PROGRESSION_RATE_MODIFIER = 10;
 });
 /////////////////////////////////////////////////////////
-
+//THIS IS THE OFFICIAL GAME OBJECT for the game being played
 var game = Object.create(GameProgression);//universal game object
+
+function togglePause(){
+  game.pause();
+}
 
 function simulate(){
   var UserWins = 0;

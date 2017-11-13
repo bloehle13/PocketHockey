@@ -2,6 +2,10 @@
 var GAME_PROGRESSION_RATE = 1000;//in ms
 var GAME_PROGRESSION_RATE_MODIFIER = 1;
 
+/**
+* EVERYTHING in this object is in terms of "game"
+* "game" is the universal object for the game that's being played!!!!!
+*/
 var GameProgression = {
 
   gameTime: 3600, //60 min
@@ -9,18 +13,26 @@ var GameProgression = {
   CPUTeamFaceoffs: 0,
   totalFaceoffs: 0,
   messages: [],
+  isPaused: false,
+  userTeamHasPuck: false,
+  cpuTeamHasPuck: false,
+
+  pause: function(){
+    game.isPaused = !game.isPaused;
+    game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck);
+  },
 
   addToMessageQueue: function(message){//adds to array of messages to be printed to ticker
-    if(this.getGameClock().indexOf('-') === -1){//prevents printing out a negative time
-      this.messages.push(this.getGameClock() + ' - ' + message);
+    if(game.getGameClock().indexOf('-') === -1){//prevents printing out a negative time
+      game.messages.push(game.getGameClock() + ' - ' + message);
     }
   },
 
   printOnceToTicker: function(message){
-    var gameClock = this.getGameClock();
+    var gameClock = game.getGameClock();
 
     if(gameClock.indexOf('-') === -1){//game time is not negative, so it's valid
-      $('#lower-half-div').append(this.getGameClock() + ': ' + message);
+      $('#lower-half-div').append(game.getGameClock() + ': ' + message);
       $('#lower-half-div').animate({scrollTop: $('#lower-half-div').get(0).scrollHeight}, 10);
     }else{
       //GAME IS OVER
@@ -38,9 +50,9 @@ var GameProgression = {
   },
 
   getGameClock: function(){//formats a clock feel to the current game time
-    var min = Math.floor(this.gameTime / 60);
+    var min = Math.floor(game.gameTime / 60);
     var formatedMin = ("0" + min).slice(-2);
-    var sec = Math.floor(this.gameTime % 60);
+    var sec = Math.floor(game.gameTime % 60);
     var formatedSec = ("0" + sec).slice(-2);
     return(formatedMin + ":" + formatedSec);
   },
@@ -58,7 +70,7 @@ var GameProgression = {
   reset: function(){
     UserTeam.reset();
     CPUTeam.reset();
-    this.gameTime = 3600;
+    game.gameTime = 3600;
   },
 
   faceoff: function(){
@@ -69,8 +81,8 @@ var GameProgression = {
 
     if(player1Faceoff >= player2Faceoff){
 
-      this.UserTeamFaceoffs++;
-      this.totalFaceoffs++;
+      game.UserTeamFaceoffs++;
+      game.totalFaceoffs++;
       CPUTeam.timeInZone = 0;
       CPUTeam.resetAssists();
       UserTeam.addToAssist(player1);
@@ -80,8 +92,8 @@ var GameProgression = {
     }
     if(player2Faceoff > player1Faceoff){
 
-      this.CPUTeamFaceoffs++;
-      this.totalFaceoffs++;
+      game.CPUTeamFaceoffs++;
+      game.totalFaceoffs++;
       UserTeam.timeInZone = 0;
       UserTeam.resetAssists();
       CPUTeam.addToAssist(player2);
@@ -90,94 +102,99 @@ var GameProgression = {
 
     }
 
-    else this.faceoff();
+    else game.faceoff();
   },
 
   beginGame: function(){
-    this.progressGame(false, false);//neither team starts with puck
+    game.progressGame(false, false);//neither team starts with puck
   },
 
   progressGame: function(userTeamPosession, cpuTeamPosession){
 
-    var userTeamHasPuck = userTeamPosession;
-    var cpuTeamHasPuck = cpuTeamPosession;
+    if(!game.isPaused){
+      game.userTeamHasPuck = userTeamPosession;
+      game.cpuTeamHasPuck = cpuTeamPosession;
 
-    //while(this.gameTime > 0){
-      //console.log('UserTeam: ' + userTeamHasPuck);
-      //console.log('CPUTeam: ' + cpuTeamHasPuck);
+      //while(game.gameTime > 0){
+        //console.log('UserTeam: ' + userTeamHasPuck);
+        //console.log('CPUTeam: ' + cpuTeamHasPuck);
 
-      var teamWithPuck = null;
+        var teamWithPuck = null;
 
-      if(userTeamHasPuck){
+        if(game.userTeamHasPuck){
 
-        userTeamHasPuck = false;
-        cpuTeamHasPuck = false;
-        teamWithPuck = this.takeShot(UserTeam, CPUTeam);
+          game.userTeamHasPuck = false;
+          game.cpuTeamHasPuck = false;
+          teamWithPuck = game.takeShot(UserTeam, CPUTeam);
 
-      }else if(cpuTeamHasPuck){
+        }else if(game.cpuTeamHasPuck){
 
-        userTeamHasPuck = false;
-        cpuTeamHasPuck = false;
-        teamWithPuck = this.takeShot(CPUTeam, UserTeam);
+          game.userTeamHasPuck = false;
+          game.cpuTeamHasPuck = false;
+          teamWithPuck = game.takeShot(CPUTeam, UserTeam);
 
-      }else{
-        userTeamHasPuck = false;
-        cpuTeamHasPuck = false;
-        var team = this.faceoff();
+        }else{
+          game.userTeamHasPuck = false;
+          game.cpuTeamHasPuck = false;
+          var team = game.faceoff();
 
-        if(team === UserTeam){
+          if(team === UserTeam){
 
-          this.printOnceToTicker("Team 1 wins faceoff" + "<br>");
-          this.gameTime -= UserTeam.getFaceoffInterval();
-          UserTeam.resetAssists();
-          teamWithPuck = this.takeShot(UserTeam, CPUTeam);
+            game.printOnceToTicker("Team 1 wins faceoff" + "<br>");
+            game.gameTime -= UserTeam.getFaceoffInterval();
+            UserTeam.resetAssists();
+            teamWithPuck = game.takeShot(UserTeam, CPUTeam);
 
-        }if(team === CPUTeam){
+          }if(team === CPUTeam){
 
-          this.printOnceToTicker("Team 2 wins faceoff" + "<br>");
-          this.gameTime -= CPUTeam.getFaceoffInterval();
-          CPUTeam.resetAssists();
-          teamWithPuck = this.takeShot(CPUTeam, UserTeam);
+            game.printOnceToTicker("Team 2 wins faceoff" + "<br>");
+            game.gameTime -= CPUTeam.getFaceoffInterval();
+            CPUTeam.resetAssists();
+            teamWithPuck = game.takeShot(CPUTeam, UserTeam);
+
+          }
 
         }
 
-      }
+        if(teamWithPuck != null && teamWithPuck.name === 'UserTeam'){
+          console.log('UserTeam');
+          game.userTeamHasPuck = true;
+          game.cpuTeamHasPuck = false;
+        }else if(teamWithPuck != null && teamWithPuck.name === 'CPUTeam'){
+          console.log('CPUTeam');
+          game.userTeamHasPuck = false;
+          game.cpuTeamHasPuck = true;
+        }else{
+          console.log('neither');
+          game.userTeamHasPuck = false;
+          game.cpuTeamHasPuck = false;
+        }
 
-      if(teamWithPuck != null && teamWithPuck.name === 'UserTeam'){
-        console.log('UserTeam');
-        userTeamHasPuck = true;
-        cpuTeamHasPuck = false;
-      }else if(teamWithPuck != null && teamWithPuck.name === 'CPUTeam'){
-        console.log('CPUTeam');
-        userTeamHasPuck = false;
-        cpuTeamHasPuck = true;
+      //}
+      if(game.gameTime > 0){
+          console.log('Should the game be running: ' + !game.isPaused);
+          setTimeout(function(){game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
+
       }else{
-        console.log('neither');
-        userTeamHasPuck = false;
-        cpuTeamHasPuck = false;
+        $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
+        $('#lower-half-div').append('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
       }
-
-    //}
-
-    if(this.gameTime> 0){
-      setTimeout(function(){GameProgression.progressGame(userTeamHasPuck, cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
-    }else{
-      $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
-      $('#lower-half-div').append('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
     }
+
+
 
 
   },
 
   takeShot: function(oTeam, dTeam){//returns what happens next
-    //this.printOnceToTicker("Current time in zone: " + oTeam.timeInZone + "<br>");
+    //game.printOnceToTicker("Current time in zone: " + oTeam.timeInZone + "<br>");
     var player = oTeam.getRandomPlayer();
     var shotLocation = player.getShot();
     var shootOrPass = oTeam.shootOrPass(shotLocation, player);
 
     //HANDLING SHOOTING
     if(shootOrPass === 'Shoot'){
-      this.gameTime -= oTeam.getShotInterval();
+      game.gameTime -= oTeam.getShotInterval();
       var shot = player.shoot(shotLocation) + oTeam.timeInZone;
 
       player.drainEnergy('shoot');
@@ -194,9 +211,9 @@ var GameProgression = {
 
         if(dTeam.gameTickerMessage !== ""){
 
-            this.printOnceToTicker(dTeam.gameTickerMessage + "<br>");
+            game.printOnceToTicker(dTeam.gameTickerMessage + "<br>");
             dTeam.gameTickerMessage = "";
-            this.gameTime -= dTeam.getBlockInterval();
+            game.gameTime -= dTeam.getBlockInterval();
             playerShotBlock.drainEnergy('blockShot');
 
         }
@@ -208,15 +225,15 @@ var GameProgression = {
           dTeam.playerLastTouchedPuck = playerShotBlock;
           var playerWithPuck = dTeam.getRandomPlayer();
           dTeam.addToAssist(playerWithPuck)//someone got the blocked shot
-          this.printOnceToTicker(playerWithPuck.lastName + ' recovered the puck' + "<br>")
-          //this.takeShot(dTeam, oTeam);
+          game.printOnceToTicker(playerWithPuck.lastName + ' recovered the puck' + "<br>")
+          //game.takeShot(dTeam, oTeam);
           return dTeam;
 
         }
         else{
 
-          this.printOnceToTicker(oTeam.name + ' got the puck back' + "<br>")
-          //this.takeShot(oTeam, dTeam);
+          game.printOnceToTicker(oTeam.name + ' got the puck back' + "<br>")
+          //game.takeShot(oTeam, dTeam);
           return oTeam;
 
         }
@@ -231,7 +248,7 @@ var GameProgression = {
 
           if (oTeam.gameTickerMessage !== "" && screenPlayer !== null){
 
-            this.printOnceToTicker(oTeam.gameTickerMessage + "<br>");
+            game.printOnceToTicker(oTeam.gameTickerMessage + "<br>");
             oTeam.gameTickerMessage = "";
 
           }
@@ -255,7 +272,7 @@ var GameProgression = {
           oTeam.shots++;
           oTeam.shotAttempts++;
           oTeam.resetAssists();
-          this.printOnceToTicker(player.lastName + ' shoots, ' + dTeam.name + ' makes the save' + "<br>");
+          game.printOnceToTicker(player.lastName + ' shoots, ' + dTeam.name + ' makes the save' + "<br>");
 
         }
         if(save === false){
@@ -264,13 +281,13 @@ var GameProgression = {
           oTeam.goals++;
           oTeam.shotAttempts++;
           oTeam.timeInZone = 0;
-          this.printOnceToTicker(oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
+          game.printOnceToTicker(oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
 
         }
         if(save === null){
 
           oTeam.shotAttempts++;
-          this.printOnceToTicker(player.lastName + ' missed the net' + "<br>");
+          game.printOnceToTicker(player.lastName + ' missed the net' + "<br>");
 
           //see who gets the missed shot, NEEDS MODIFICATION
           if(Math.random() < 0.5){
@@ -285,15 +302,15 @@ var GameProgression = {
 
     //HANDLING PASSING
     if(shootOrPass === 'Pass'){
-      this.gameTime -= oTeam.getPassInterval();
+      game.gameTime -= oTeam.getPassInterval();
       if(Math.random() < player.passing){
 
           oTeam.timeInZone += 0.05;
           oTeam.addToAssist(player);
           oTeam.playerLastTouchedPuck = player;
-          this.printOnceToTicker(player.lastName + ' made a pass' + "<br>");
+          game.printOnceToTicker(player.lastName + ' made a pass' + "<br>");
           player.drainEnergy('pass');
-          //this.takeShot(oTeam, dTeam);
+          //game.takeShot(oTeam, dTeam);
           return oTeam;
 
       }
@@ -301,9 +318,9 @@ var GameProgression = {
 
         oTeam.timeInZone = 0;
         oTeam.resetAssists();
-        this.printOnceToTicker(player.lastName + ' turned it over' + "<br>");
+        game.printOnceToTicker(player.lastName + ' turned it over' + "<br>");
         player.drainEnergy('turnover');
-        //this.takeShot(dTeam, oTeam);
+        //game.takeShot(dTeam, oTeam);
         return dTeam;
 
       }
