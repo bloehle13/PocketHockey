@@ -21,6 +21,27 @@ UserTeam.goalie1 = [goalie];
 UserTeam.goalie2 = [];
 UserTeam.goalies = [UserTeam.goalie1, UserTeam.goalie2]
 
+//Left wings can be center, right wings can be left wing, etc. However, array
+//shows positions left to right on actual game screen. Index 0 = LW, 1 = C,
+//2 = RW, 3 = LD, 4 = RD
+UserTeam.getPlayerPositionOnScreen = function(player){
+
+  var index = -1;
+
+  for(var i = 0; i < this.players.length; i++){
+    if(this.players[i] == player){
+      console.log('found player');
+      index = i;
+    }
+  }
+
+  if(index > -1){//player was found
+    return this.players[index];
+  }else{//no player was found
+    return null;
+  }
+
+}
 
 /*Updates the numbers that correspond to lines, pairs, and goalies*/
 function changePlayers(lineNum, pairNum, goalieNum){

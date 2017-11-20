@@ -37,34 +37,37 @@ var Player = {
   drainEnergy: function(eventType){//drain energy based on event type
     switch(eventType){
       case 'shoot':
-        this.energy = 0;
-        console.log(this.energy);
+        this.energy -= 0.25;
+        // console.log(this.energy);
         break;
       case 'pass':
-        this.energy = 0.1;
-        console.log(this.energy);
+        this.energy -= 0.1;
+        // console.log(this.energy);
         break;
       case 'blockShot':
-        this.energy = 0.2;
-        console.log(this.energy);
+        this.energy -= 0.5;
+        // console.log(this.energy);
         break;
       case 'turnover':
-        this.energy = 0.3;
-        console.log(this.energy);
+        this.energy -= 0.15;
+        // console.log(this.energy);
         break;
       case 'faceoff':
-        this.energy = 0.4;
-        console.log(this.energy);
+        this.energy -= 0.05;
+        // console.log(this.energy);
         break;
       case 'screen':
-        this.energy = 0.5;
-        console.log(this.energy);
+        this.energy -= 0.30;
+        // console.log(this.energy);
         break;
       case 'tip':
-        this.energy = 0.6;
-        console.log(this.energy);
+        this.energy -= 0.35;
+        // console.log(this.energy);
         break;
     }
+
+    console.log(UserTeam.getPlayerPositionOnScreen(this));
+    $('#fatigue-progress-bar-forward-left').css('width', this.energy*100 + "%");
   }
 }
 
