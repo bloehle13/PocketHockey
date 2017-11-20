@@ -154,23 +154,23 @@ var GameProgression = {
         }
 
         if(teamWithPuck != null && teamWithPuck.name === 'UserTeam'){
-          console.log('UserTeam');
+          //console.log('UserTeam');
           this.userTeamHasPuck = true;
           this.cpuTeamHasPuck = false;
         }else if(teamWithPuck != null && teamWithPuck.name === 'CPUTeam'){
-          console.log('CPUTeam');
+          //console.log('CPUTeam');
           this.userTeamHasPuck = false;
           this.cpuTeamHasPuck = true;
         }else{
-          console.log('neither');
+          //console.log('neither');
           this.userTeamHasPuck = false;
           this.cpuTeamHasPuck = false;
         }
 
       //}
       if(this.gameTime > 0){
-          console.log('Should the game be running: ' + !this.isPaused);
-          setTimeout(function(){game.progressGame(this.userTeamHasPuck, this.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
+          //console.log('Should the game be running: ' + !this.isPaused);
+          setTimeout(function(){game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
 
       }else{
         $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");

@@ -66,8 +66,30 @@ var Player = {
         break;
     }
 
-    console.log(UserTeam.getPlayerPositionOnScreen(this));
-    $('#fatigue-progress-bar-forward-left').css('width', this.energy*100 + "%");
+    var position = UserTeam.getPlayerPositionOnScreen(this);
+
+    console.log('position = ' + position);
+
+    switch(position){
+      case 0://LW
+        $('#fatigue-progress-bar-forward-left').css('width', this.energy*100 + "%");
+        break;
+      case 1://C
+        $('#fatigue-progress-bar-forward-center').css('width', this.energy*100 + "%");
+        break;
+      case 2://RW
+        $('#fatigue-progress-bar-forward-right').css('width', this.energy*100 + "%");
+        break;
+      case 3://LD
+        $('#fatigue-progress-bar-defense-left').css('width', this.energy*100 + "%");
+        break;
+      case 4://RD
+        $('#fatigue-progress-bar-defense-right').css('width', this.energy*100 + "%");
+        break;
+      default:
+        break;
+    }
+
   }
 }
 

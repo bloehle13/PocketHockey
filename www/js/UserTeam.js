@@ -36,9 +36,9 @@ UserTeam.getPlayerPositionOnScreen = function(player){
   }
 
   if(index > -1){//player was found
-    return this.players[index];
+    return index;
   }else{//no player was found
-    return null;
+    return -1;
   }
 
 }
