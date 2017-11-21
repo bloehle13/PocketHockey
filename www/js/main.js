@@ -94,12 +94,6 @@ upperHalfGestures.on('swipe', function(ev){
 });
 
 
-
-/*
-
-
-NEEDS TO BE IMPLEMENTED STILL
-*/
 $('#carrying-puck').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
@@ -114,56 +108,6 @@ $('#dumping-puck').rangeslider({
   }
 });
 
-
-
-$(document).on('input', '#shotPowerSlideF', function() {
-    var shotPowerF = $('#shotPowerSlideF').val() / 100;
-    forward1.shotPower = shotPowerF;
-    forward2.shotPower = shotPowerF;
-    $('#shotPowerNumF').text('Shot Power: ' + shotPowerF);
-});
-$(document).on('input', '#shotAccuracySlideF', function() {
-    var shotAccuracyF = $('#shotAccuracySlideF').val() / 100;
-    forward1.shotAccuracy = shotAccuracyF;
-    forward2.shotAccuracy = shotAccuracyF;
-    $('#shotAccuracyNumF').text('Shot Accuracy: ' + shotAccuracyF);
-});
-$(document).on('input', '#confidenceSlideF', function() {
-    var confidenceF = $('#confidenceSlideF').val() / 100;
-    forward1.confidence = confidenceF;
-    forward2.confidence = confidenceF;
-    $('#confidenceNumF').text('Confidence: ' + confidenceF);
-});
-$(document).on('input', '#shotPowerSlideD', function() {
-    var shotPowerD = $('#shotPowerSlideD').val() / 100;
-    defender1.shotPower = shotPowerD;
-    $('#shotPowerNumD').text('Shot Power: ' + shotPowerD);
-});
-$(document).on('input', '#shotAccuracySlideD', function() {
-    var shotAccuracyD = $('#shotAccuracySlideD').val() / 100;
-    defender1.shotAccuracy = shotAccuracyD;
-    $('#shotAccuracyNumD').text('Shot Accuracy: ' + shotAccuracyD);
-});
-$(document).on('input', '#confidenceSlideD', function() {
-    var confidenceD = $('#confidenceSlideD').val() / 100;
-    defender1.confidence = confidenceD;
-    $('#confidenceNumD').text('Confidence: ' + confidenceD);
-});
-$(document).on('input', '#savePercentageSlide', function() {
-    var savePercentageNum = $('#savePercentageSlide').val() / 100;
-    goalie1.savePercentage = savePercentageNum;
-    $('#savePercentageNum').text('Save Percentage: ' + savePercentageNum);
-});
-$(document).on('input', '#confidenceSlideG', function() {
-    var confidenceG = 1 + $('#confidenceSlideG').val() / 1000;
-    goalie1.confidence = confidenceG;
-    $('#confidenceNumG').text('Confidence: ' + confidenceG);
-});
-$(document).on('input', '#consistencySlideG', function() {
-    var consistencyG = $('#consistencySlideG').val() / 1000;
-    goalie1.consistency = consistencyG;
-    $('#consistencyNumG').text('Consistency: ' + consistencyG);
-});
 
 //Handles simulation speed modifiers
 $('input[id="simSpeedOption1x"]').change( function() {
@@ -184,6 +128,10 @@ $('input[id="simSpeedOption10x"]').change( function() {
 /////////////////////////////////////////////////////////
 //THIS IS THE OFFICIAL GAME OBJECT for the game being played
 var game = Object.create(GameProgression);//universal game object
+
+UserTeam.setAllPlayers();
+line1();
+pair1();
 
 function togglePause(){
   game.pause();
@@ -208,8 +156,6 @@ function simulate(){
     //game.reset();
 
   }
-  $('#lower-half-div').append("<br>" + 'User: ' + UserWins);
-  $('#lower-half-div').append("<br>" + 'CPU: ' + CPUWins);
-  $('#lower-half-div').append("<br>" + 'ties: ' + ties);
+
   //  var x = $('#lower-half-div').children().length;
 }

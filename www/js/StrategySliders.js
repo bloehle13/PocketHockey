@@ -1,25 +1,12 @@
 var OffensiveSliders = {
-  passing: 0.0,
-  shooting: 0.0,
-  tipping: 0.0,
-  screening: 0.0,
-  aggresiveness: 0.0,
-  carrying: 0.0,
-  dumping: 0.0,
-  shootingTendencies: [0.05, 0.10, 0.05,
-                      0.15, 0.20, 0.15,
-                      0.10, 0.10, 0.10],
-
-  constructor: function(passing, shooting, tipping, screening, aggresiveness,
-                        carrying, dumping){
-    this.passing = passing;
-    this.shooting = shooting;
-    this.tipping = tipping;
-    this.screening = screening;
-    this.aggresiveness = aggresiveness;
-    this.carrying = carrying;
-    this.dumping = dumping;
-  }
+  passing: 0.5,
+  shooting: 0.5,
+  tipping: 0.5,
+  screening: 0.5,
+  aggresiveness: 0.5,
+  carrying: 0.5,
+  dumping: 0.5,
+  
 }
 
 var DefensiveSliders = {

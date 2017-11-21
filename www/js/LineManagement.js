@@ -14,28 +14,44 @@ var BACKUP_GOALIE = 1;
 function forwardSwitch(lineNum){
   switch(lineNum){
     case 1:
-      changePlayers(1, UserTeam.currentPair, UserTeam.currentGoalie);
+      UserTeam.changePlayers(1, UserTeam.currentPair, UserTeam.currentGoalie);
       $('#name-forward-left').html(UserTeam.line1[LEFT_FWD].firstName + '<br> ' + UserTeam.line1[LEFT_FWD].lastName);
       $('#name-forward-center').html(UserTeam.line1[CENTER_FWD].firstName + '<br> ' + UserTeam.line1[CENTER_FWD].lastName);
       $('#name-forward-right').html(UserTeam.line1[RIGHT_FWD].firstName + '<br> ' + UserTeam.line1[RIGHT_FWD].lastName);
+
+      $('#fatigue-progress-bar-forward-left').css('width', UserTeam.line1[0].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-center').css('width', UserTeam.line1[1].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-right').css('width', UserTeam.line1[2].energy*100 + "%");
       break;
     case 2:
-      changePlayers(2, UserTeam.currentPair, UserTeam.currentGoalie);
+      UserTeam.changePlayers(2, UserTeam.currentPair, UserTeam.currentGoalie);
       $('#name-forward-left').html(UserTeam.line2[LEFT_FWD].firstName + '<br> ' + UserTeam.line2[LEFT_FWD].lastName);
       $('#name-forward-center').html(UserTeam.line2[CENTER_FWD].firstName + '<br> ' + UserTeam.line2[CENTER_FWD].lastName);
       $('#name-forward-right').html(UserTeam.line2[RIGHT_FWD].firstName + '<br> ' + UserTeam.line2[RIGHT_FWD].lastName);
+
+      $('#fatigue-progress-bar-forward-left').css('width', UserTeam.line2[0].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-center').css('width', UserTeam.line2[1].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-right').css('width', UserTeam.line2[2].energy*100 + "%");
       break;
     case 3:
-      changePlayers(3, UserTeam.currentPair, UserTeam.currentGoalie);
+      UserTeam.changePlayers(3, UserTeam.currentPair, UserTeam.currentGoalie);
       $('#name-forward-left').html(UserTeam.line3[LEFT_FWD].firstName + '<br> ' + UserTeam.line3[LEFT_FWD].lastName);
       $('#name-forward-center').html(UserTeam.line3[CENTER_FWD].firstName + '<br> ' + UserTeam.line3[CENTER_FWD].lastName);
       $('#name-forward-right').html(UserTeam.line3[RIGHT_FWD].firstName + '<br> ' + UserTeam.line3[RIGHT_FWD].lastName);
+
+      $('#fatigue-progress-bar-forward-left').css('width', UserTeam.line3[0].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-center').css('width', UserTeam.line3[1].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-right').css('width', UserTeam.line3[2].energy*100 + "%");
       break;
     case 4:
-      changePlayers(4, UserTeam.currentPair, UserTeam.currentGoalie);
+      UserTeam.changePlayers(4, UserTeam.currentPair, UserTeam.currentGoalie);
       $('#name-forward-left').html(UserTeam.line4[LEFT_FWD].firstName + '<br> ' + UserTeam.line4[LEFT_FWD].lastName);
       $('#name-forward-center').html(UserTeam.line4[CENTER_FWD].firstName + '<br> ' + UserTeam.line4[CENTER_FWD].lastName);
       $('#name-forward-right').html(UserTeam.line4[RIGHT_FWD].firstName + '<br> ' + UserTeam.line4[RIGHT_FWD].lastName);
+
+      $('#fatigue-progress-bar-forward-left').css('width', UserTeam.line4[0].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-center').css('width', UserTeam.line4[1].energy*100 + "%");
+      $('#fatigue-progress-bar-forward-right').css('width', UserTeam.line4[2].energy*100 + "%");
       break;
   }
 }
@@ -43,19 +59,28 @@ function forwardSwitch(lineNum){
 function defenderSwitch(lineNum){
   switch(lineNum){
     case 1:
-      changePlayers(UserTeam.currentLine, 1, UserTeam.currentGoalie);
+      UserTeam.changePlayers(UserTeam.currentLine, 1, UserTeam.currentGoalie);
       $('#name-defense-left').html(UserTeam.pair1[LEFT_DEF].firstName + ' ' + UserTeam.pair1[LEFT_DEF].lastName);
       $('#name-defense-right').html(UserTeam.pair1[RIGHT_DEF].firstName + ' ' + UserTeam.pair1[RIGHT_DEF].lastName);
+
+      $('#fatigue-progress-bar-defense-left').css('width', UserTeam.pair1[0].energy*100 + "%");
+      $('#fatigue-progress-bar-defense-right').css('width', UserTeam.pair1[1].energy*100 + "%");
       break;
     case 2:
-      changePlayers(UserTeam.currentLine, 2, UserTeam.currentGoalie);
+      UserTeam.changePlayers(UserTeam.currentLine, 2, UserTeam.currentGoalie);
       $('#name-defense-left').html(UserTeam.pair2[LEFT_DEF].firstName + ' ' + UserTeam.pair2[LEFT_DEF].lastName);
       $('#name-defense-right').html(UserTeam.pair2[RIGHT_DEF].firstName + ' ' + UserTeam.pair2[RIGHT_DEF].lastName);
+
+      $('#fatigue-progress-bar-defense-left').css('width', UserTeam.pair2[0].energy*100 + "%");
+      $('#fatigue-progress-bar-defense-right').css('width', UserTeam.pair2[1].energy*100 + "%");
       break;
     case 3:
-      changePlayers(UserTeam.currentLine, 3, UserTeam.currentGoalie);
+      UserTeam.changePlayers(UserTeam.currentLine, 3, UserTeam.currentGoalie);
       $('#name-defense-left').html(UserTeam.pair3[LEFT_DEF].firstName + ' ' + UserTeam.pair3[LEFT_DEF].lastName);
       $('#name-defense-right').html(UserTeam.pair3[RIGHT_DEF].firstName + ' ' + UserTeam.pair3[RIGHT_DEF].lastName);
+
+      $('#fatigue-progress-bar-defense-left').css('width', UserTeam.pair3[0].energy*100 + "%");
+      $('#fatigue-progress-bar-defense-right').css('width', UserTeam.pair3[1].energy*100 + "%");
       break;
   }
 }

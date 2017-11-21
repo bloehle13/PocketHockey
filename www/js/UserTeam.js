@@ -1,6 +1,8 @@
 var UserTeam = Object.create(Team);
+UserTeam.offensiveStrategies = Object.create(OffensiveSliders),
+UserTeam.defensiveStrategies = Object.create(DefensiveSliders),
 UserTeam.name = 'UserTeam';
-UserTeam.players = [test1, test2, test3, test4, test5];
+UserTeam.players = [lefleurGuy, loehleBrandon, gulliverAnthony, beyerPhillipe, lacroixPierre];
 
 UserTeam.currentLine = 1;
 UserTeam.currentPair = 1;
@@ -17,7 +19,7 @@ UserTeam.pair2 = [belovaRussell, porterZack];
 UserTeam.pair3 = [sullivanRobert, larssonLucas];
 UserTeam.pairs = [UserTeam.pair1, UserTeam.pair2, UserTeam.pair3]
 
-UserTeam.goalie1 = [goalie];
+UserTeam.goalie1 = [UserTeam.goalie];
 UserTeam.goalie2 = [];
 UserTeam.goalies = [UserTeam.goalie1, UserTeam.goalie2]
 
@@ -30,7 +32,7 @@ UserTeam.getPlayerPositionOnScreen = function(player){
 
   for(var i = 0; i < this.players.length; i++){
     if(this.players[i] == player){
-      console.log('found player');
+      //console.log('found player');
       index = i;
     }
   }
@@ -43,18 +45,60 @@ UserTeam.getPlayerPositionOnScreen = function(player){
 
 }
 
+/*Push all players into an array*/
+UserTeam.setAllPlayers = function(){
+  UserTeam.allPlayers = UserTeam.line1.concat(UserTeam.line2, UserTeam.line3, UserTeam.line4,
+                                              UserTeam.pair1, UserTeam.pair2, UserTeam.pair3);
+}
+
+/*Drain all players on ice by variable amounts*/
+UserTeam.genericDrainEnergy = function(){
+
+  for(var i = 0; i < UserTeam.players.length; i++){
+      UserTeam.players[i].energy -= Math.random() * 0.1;
+  }
+
+  $('#fatigue-progress-bar-forward-left').css('width', UserTeam.players[0].energy*100 + "%");
+  $('#fatigue-progress-bar-forward-center').css('width', UserTeam.players[1].energy*100 + "%");
+  $('#fatigue-progress-bar-forward-right').css('width', UserTeam.players[2].energy*100 + "%");
+  $('#fatigue-progress-bar-defense-left').css('width', UserTeam.players[3].energy*100 + "%");
+  $('#fatigue-progress-bar-defense-right').css('width', UserTeam.players[4].energy*100 + "%");
+
+}
+
+/*Recharges energy of players on the bench*/
+UserTeam.rechargeEnergy = function(){
+
+  for(var i = 0; i < UserTeam.allPlayers.length; i++){
+    if(!UserTeam.allPlayers[i].onIce && UserTeam.allPlayers[i].energy < 1){//if they are not on the ice
+                                                                           //&& energy is not 100%
+
+        UserTeam.allPlayers[i].energy += Math.random() * 0.05;//random amount from 0%-5% each tick of game
+
+        if(UserTeam.allPlayers[i].energy > 1){//if energy is now higher than 100%, set it to 100%
+          UserTeam.allPlayers[i].energy = 1;
+        }
+    }
+  }
+}
+
 /*Updates the numbers that correspond to lines, pairs, and goalies*/
-function changePlayers(lineNum, pairNum, goalieNum){
+UserTeam.changePlayers = function(lineNum, pairNum, goalieNum){
   UserTeam.currentLine = lineNum;
   UserTeam.currentPair = pairNum;
   UserTeam.currentGoalie = goalieNum;
 
   //now update the players with the new numbers for lines and pairs and goalies
-  updatePlayers();
+  this.updatePlayers();
 }
 
 /*To be called locally, just updates the players given the UserTeam.current_____ variables*/
-function updatePlayers(){
+UserTeam.updatePlayers = function(){
+
+  //set the current players to be not onIce, making them gain energy on the bench
+  for(var i = 0; i < UserTeam.players.length; i++){
+    UserTeam.players[i].onIce = false;
+  }
 
   //clear the current players
   UserTeam.players = [];
@@ -88,5 +132,16 @@ function updatePlayers(){
       break;
     }
 
-        console.log(UserTeam.players);
+    //set these players to be onIce, making them lose energy
+    for(var i = 0; i < UserTeam.players.length; i++){
+      UserTeam.players[i].onIce = true;
+    }
+
+    console.log(UserTeam.players);
+    console.log(UserTeam.allPlayers);
+
+}
+
+UserTeam.replenishEnergy = function(){
+
 }

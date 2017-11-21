@@ -12,6 +12,7 @@ var Player = {
   passingShootingDiff: 0, //slider difference, 0 means slider in middle
   height: 73, //in inches
   energy: 1, //out of 0-1
+  onIce: false, //on the bench initially
   shoot: function(shotLocation){
     var shotWide = this.missTheNet();
     if(shotWide){
@@ -19,10 +20,10 @@ var Player = {
     }
     else{
       if(this.injured){//shot is divided by 2 if injured
-        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence / 2;
+        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence * this.energy / 2;
       }
       else{
-        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence;
+        return this.shotAccuracy * this.shotPower * shotLocation * this.confidence * this.energy;
       }
     }
   },
@@ -64,11 +65,15 @@ var Player = {
         this.energy -= 0.35;
         // console.log(this.energy);
         break;
+
+    }
+
+    if(this.energy < 0){//ensures no negative energy
+      this.energy = 0;
     }
 
     var position = UserTeam.getPlayerPositionOnScreen(this);
 
-    console.log('position = ' + position);
 
     switch(position){
       case 0://LW

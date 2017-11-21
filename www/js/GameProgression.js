@@ -108,6 +108,12 @@ var GameProgression = {
 
   progressGame: function(userTeamPosession, cpuTeamPosession){
 
+            console.log(CPUTeam.offensiveStrategies.passing);
+            console.log(UserTeam.offensiveStrategies.passing);
+
+    UserTeam.genericDrainEnergy();//drain energy of those on ice a little each time
+    UserTeam.rechargeEnergy();//give energy to bench players
+
     if(!this.isPaused){
       this.userTeamHasPuck = userTeamPosession;
       this.cpuTeamHasPuck = cpuTeamPosession;
@@ -279,6 +285,7 @@ var GameProgression = {
           oTeam.shotAttempts++;
           oTeam.timeInZone = 0;
           this.printOnceToTicker(oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
+          this.printOnceToTicker(oTeam.name + ': ' + oTeam.goals + '    ' + dTeam.name + ': ' + dTeam.goals + "<br>");
 
         }
         if(save === null){

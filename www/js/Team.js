@@ -1,20 +1,10 @@
-var goalie = Object.create(Goalie);
-var offensiveStrategies = Object.create(OffensiveSliders);
-var defensiveStrategies = Object.create(DefensiveSliders);
-offensiveStrategies.shooting = 0.5;
-offensiveStrategies.passing = 0.5;
-offensiveStrategies.screening = 0.5;
-offensiveStrategies.tipping = 0.5;
-offensiveStrategies.aggresiveness = 0.5;
-defensiveStrategies.shotBlocking = 0.5;
+
 
 var Team = {
 
     momentum: 1,
     shotInterval: 2,//range of minutes between shots
-    goalie: goalie,
-    offensiveStrategies: offensiveStrategies,
-    defensiveStrategies: defensiveStrategies,
+    goalie: Object.create(Goalie),
     gameTickerMessage: "",
     timeInZone: 0,
     saves: 0,
@@ -75,11 +65,11 @@ var Team = {
     },
     getAssists: function(playerWhoScored){
       var assists = ' ';
-      if(this.assistPlayers[0] !== null && this.assistPlayers[0] !== playerWhoScored){
+      if(this.assistPlayers[0] !== null && this.assistPlayers[0].lastName !== playerWhoScored.lastName){
         assists = 'Assists by ';
         assists += this.assistPlayers[0].lastName;
       }
-      if(this.assistPlayers[1] !== null && this.assistPlayers[0] !== playerWhoScored){
+      if(this.assistPlayers[1] !== null && this.assistPlayers[0].lastName !== playerWhoScored.lastName){
         assists += ' and ';
         assists += this.assistPlayers[1].lastName;
       }
@@ -96,18 +86,18 @@ var Team = {
         tip: false
       };//by default screening will have no effect
       if(Math.random() < this.offensiveStrategies.screening){
-        player.drainEnergy('screen');
         screenPlayer.screenNum = 0.05;
         var height  = screenPlayer.height;
         var diffHeight = 73 - height; //73 is average height, and thus the average screening attribute
-        screenPlayer.screenNum += diffHeight / 100; //add or subtract screen effectiveness given height
+        screenPlayer.screenNum += Math.abs(diffHeight) / 100 * player.energy; //add or subtract screen effectiveness given height
+        player.drainEnergy('screen');
         if(this.didScreenWork()){
           this.gameTickerMessage += (screenPlayer.lastName + ' screened Goalie with: ' + screenPlayer.screenNum);
           if(Math.random() < this.offensiveStrategies.tipping){//did the player tip the puck?
             if(Math.random() < screenPlayer.handEye){//how successful was the tip?
               player.drainEnergy('tip');
               screenPlayer.tip = true;
-              screenPlayer.shot = Math.random() * screenPlayer.handEye/2;
+              screenPlayer.shot = Math.random() * screenPlayer.handEye/2 * player.energy;
               this.gameTickerMessage += (screenPlayer.lastName + ' tipped the puck with ' + screenPlayer.shot);
               return screenPlayer;
             }
@@ -130,9 +120,9 @@ var Team = {
     },
     blockShot: function(player){
       if(Math.random() < this.defensiveStrategies.shotBlocking){//team tendancy tp shot block
-        if(Math.random() < player.shotBlocking){//player abililty to shot block
+        if(Math.random() < player.shotBlocking * player.energy){//player abililty to shot block
            this.gameTickerMessage += (player.lastName + ' blocked the shot')
-           if(Math.random() > player.durability){//if the player got hurt or not
+           if(Math.random() > player.durability * player.energy/2){//if the player got hurt or not
              this.gameTickerMessage += (' and got injured as a result');
              this.setInjury(player.lastName);
              return true;
