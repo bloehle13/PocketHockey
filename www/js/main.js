@@ -66,7 +66,7 @@ $('#shot-blocking').rangeslider({
   polyfill: false,
   onSlide: function(position, value) {
     console.log(value);
-    UserTeam.offensiveStrategies.shotBlocking = value/100;
+    UserTeam.defensiveStrategies.shotBlocking = value/100;
 
   }
 });

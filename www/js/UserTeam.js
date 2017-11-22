@@ -137,8 +137,8 @@ UserTeam.updatePlayers = function(){
       UserTeam.players[i].onIce = true;
     }
 
-    console.log(UserTeam.players);
-    console.log(UserTeam.allPlayers);
+    //console.log(UserTeam.players);
+    //console.log(UserTeam.allPlayers);
 
 }
 

@@ -8,8 +8,13 @@ var Team = {
     gameTickerMessage: "",
     timeInZone: 0,
     saves: 0,
-    shotAttempts: 0,
+    shots: 0,
+    missedShots: 0,
     goals: 0,
+    turnovers: 0,
+    tips: 0,
+    tipGoals: 0,
+    numInjured: 0,
     name: 'N/A',
     assistPlayers: [null, null],
     playerLastTouchedPuck: null,
@@ -48,12 +53,19 @@ var Team = {
       this.healInjuries();
     },
     shootOrPass: function(shotLocation){
-        if(Math.random()*2 <= shotLocation + this.offensiveStrategies.shooting){
-          return 'Shoot';
-        }
-        else{
-          return 'Pass';
-        }
+
+      var passDiff = this.offensiveStrategies.passing - this.offensiveStrategies.shooting;
+
+      var shotChance = Math.random() * this.offensiveStrategies.shooting;
+      var passChance = Math.random()/1.2 * this.offensiveStrategies.passing + passDiff;
+
+      if(shotChance > passChance){
+        return 'Shoot';
+
+      }else{
+        return 'Pass';
+      }
+
     },
     addToAssist: function(player){
       this.assistPlayers[1] = this.assistPlayers[0];
@@ -118,13 +130,18 @@ var Team = {
     didScreenWork: function(){
       return (Math.random() < 0.5);//50 percent chance to accidently block your own teams shot
     },
-    blockShot: function(player){
+    blockShot: function(player, team){
       if(Math.random() < this.defensiveStrategies.shotBlocking){//team tendancy tp shot block
         if(Math.random() < player.shotBlocking * player.energy){//player abililty to shot block
            this.gameTickerMessage += (player.lastName + ' blocked the shot')
            if(Math.random() > player.durability * player.energy/2){//if the player got hurt or not
              this.gameTickerMessage += (' and got injured as a result');
              this.setInjury(player.lastName);
+
+             if(team === CPUTeam){
+               CPUTeam.numInjured++;
+             }
+
              return true;
            }
            else return true;

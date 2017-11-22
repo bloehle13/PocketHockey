@@ -103,16 +103,18 @@ var GameProgression = {
   },
 
   beginGame: function(){
+    CPUTeam.init();
     this.progressGame(false, false);//neither team starts with puck
+    console.log(CPUTeam);
   },
 
   progressGame: function(userTeamPosession, cpuTeamPosession){
 
-            console.log(CPUTeam.offensiveStrategies.passing);
-            console.log(UserTeam.offensiveStrategies.passing);
 
-    UserTeam.genericDrainEnergy();//drain energy of those on ice a little each time
-    UserTeam.rechargeEnergy();//give energy to bench players
+    //UserTeam.genericDrainEnergy();//drain energy of those on ice a little each time
+    //UserTeam.rechargeEnergy();//give energy to bench players
+
+    CPUTeam.adapt();
 
     if(!this.isPaused){
       this.userTeamHasPuck = userTeamPosession;
@@ -179,8 +181,10 @@ var GameProgression = {
           setTimeout(function(){game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
 
       }else{
-        $('#lower-half-div').append('Team 1: ' + '\nShot Attempts: ' + UserTeam.shotAttempts + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
-        $('#lower-half-div').append('Team 2: ' + '\nShot Attempts: ' + CPUTeam.shotAttempts + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
+        console.log(CPUTeam);
+        console.log(UserTeam);
+        $('#lower-half-div').append('Team 1: ' + '\nShots: ' + UserTeam.shots + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
+        $('#lower-half-div').append('Team 2: ' + '\nShots: ' + CPUTeam.shots + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
       }
     }
 
@@ -210,7 +214,7 @@ var GameProgression = {
 
       //HANDLING SHOT BLOCKING
       var playerShotBlock = dTeam.getRandomPlayer();
-      if(dTeam.blockShot(playerShotBlock)){
+      if(dTeam.blockShot(playerShotBlock, dTeam)){
 
         if(dTeam.gameTickerMessage !== ""){
 
@@ -259,6 +263,7 @@ var GameProgression = {
 
         if(screenPlayer.tip){
 
+          oTeam.tips++;
           oTeam.addToAssist(player);
           player = screenPlayer;
           save = dTeam.goalie.makeSave(screenPlayer.shot + screenPlayer.screenNum);//get save or goal from goalie
@@ -273,16 +278,17 @@ var GameProgression = {
 
           dTeam.saves++;
           oTeam.shots++;
-          oTeam.shotAttempts++;
           oTeam.resetAssists();
           this.printOnceToTicker(player.lastName + ' shoots, ' + dTeam.name + ' makes the save' + "<br>");
 
         }
         if(save === false){
 
-          oTeam.shots++;
+          if(screenPlayer.tip){
+            oTeam.tipGoals++;
+          }
           oTeam.goals++;
-          oTeam.shotAttempts++;
+          oTeam.shots++;
           oTeam.timeInZone = 0;
           this.printOnceToTicker(oTeam.name +' scores! Goal by ' + player.lastName + '. ' + oTeam.getAssists(player) + "<br>");
           this.printOnceToTicker(oTeam.name + ': ' + oTeam.goals + '    ' + dTeam.name + ': ' + dTeam.goals + "<br>");
@@ -290,7 +296,7 @@ var GameProgression = {
         }
         if(save === null){
 
-          oTeam.shotAttempts++;
+          oTeam.missedShots++;
           this.printOnceToTicker(player.lastName + ' missed the net' + "<br>");
 
           //see who gets the missed shot, NEEDS MODIFICATION
@@ -307,9 +313,10 @@ var GameProgression = {
     //HANDLING PASSING
     if(shootOrPass === 'Pass'){
       this.gameTime -= oTeam.getPassInterval();
+
       if(Math.random() < player.passing){
 
-          oTeam.timeInZone += 0.05;
+          oTeam.timeInZone += 0.025;
           oTeam.addToAssist(player);
           oTeam.playerLastTouchedPuck = player;
           this.printOnceToTicker(player.lastName + ' made a pass' + "<br>");
@@ -320,6 +327,7 @@ var GameProgression = {
       }
       else{
 
+        oTeam.turnovers++;
         oTeam.timeInZone = 0;
         oTeam.resetAssists();
         this.printOnceToTicker(player.lastName + ' turned it over' + "<br>");

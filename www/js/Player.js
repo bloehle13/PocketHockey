@@ -36,43 +36,43 @@ var Player = {
     return Math.random() <= 0.25;
   },
   drainEnergy: function(eventType){//drain energy based on event type
-    switch(eventType){
-      case 'shoot':
-        this.energy -= 0.25;
-        // console.log(this.energy);
-        break;
-      case 'pass':
-        this.energy -= 0.1;
-        // console.log(this.energy);
-        break;
-      case 'blockShot':
-        this.energy -= 0.5;
-        // console.log(this.energy);
-        break;
-      case 'turnover':
-        this.energy -= 0.15;
-        // console.log(this.energy);
-        break;
-      case 'faceoff':
-        this.energy -= 0.05;
-        // console.log(this.energy);
-        break;
-      case 'screen':
-        this.energy -= 0.30;
-        // console.log(this.energy);
-        break;
-      case 'tip':
-        this.energy -= 0.35;
-        // console.log(this.energy);
-        break;
-
-    }
-
-    if(this.energy < 0){//ensures no negative energy
-      this.energy = 0;
-    }
-
-    var position = UserTeam.getPlayerPositionOnScreen(this);
+    // switch(eventType){
+    //   case 'shoot':
+    //     this.energy -= 0.25;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'pass':
+    //     this.energy -= 0.1;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'blockShot':
+    //     this.energy -= 0.5;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'turnover':
+    //     this.energy -= 0.15;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'faceoff':
+    //     this.energy -= 0.05;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'screen':
+    //     this.energy -= 0.30;
+    //     // console.log(this.energy);
+    //     break;
+    //   case 'tip':
+    //     this.energy -= 0.35;
+    //     // console.log(this.energy);
+    //     break;
+    //
+    // }
+    //
+    // if(this.energy < 0){//ensures no negative energy
+    //   this.energy = 0;
+    // }
+    //
+     var position = UserTeam.getPlayerPositionOnScreen(this);
 
 
     switch(position){
