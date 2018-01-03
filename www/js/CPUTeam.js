@@ -43,6 +43,7 @@ CPUTeam.adapt = function(){
   }
 }
 
+
 /*Ensures strategy value [0-1]*/
 CPUTeam.checkStrategyBounds = function(){
 
