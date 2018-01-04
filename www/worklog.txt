@@ -1,0 +1,2 @@
+- Need to implement changable goalies
+- Player confidence and goalie composure is not implemented

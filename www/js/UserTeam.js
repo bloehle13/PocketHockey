@@ -23,6 +23,27 @@ UserTeam.goalie1 = [UserTeam.goalie];
 UserTeam.goalie2 = [];
 UserTeam.goalies = [UserTeam.goalie1, UserTeam.goalie2]
 
+UserTeam.playerReset = function(){
+
+  for(var i = 0; i < UserTeam.allPlayers.length; i++){
+    this.allPlayers[i].energy = 1;
+    this.allPlayers[i].onIce = false;
+    this.allPlayers[i].injured = false;
+  }
+
+  this.changePlayers(1,1,1);
+
+  forwardSwitch(1);
+  defenderSwitch(1);
+
+  // $('#fatigue-progress-bar-forward-left').css('width', 100 + "%");
+  // $('#fatigue-progress-bar-forward-center').css('width', 100 + "%");
+  // $('#fatigue-progress-bar-forward-right').css('width', 100 + "%");
+  // $('#fatigue-progress-bar-defense-left').css('width', 100 + "%");
+  // $('#fatigue-progress-bar-defense-right').css('width', 100 + "%")
+
+}
+
 //Left wings can be center, right wings can be left wing, etc. However, array
 //shows positions left to right on actual game screen. Index 0 = LW, 1 = C,
 //2 = RW, 3 = LD, 4 = RD

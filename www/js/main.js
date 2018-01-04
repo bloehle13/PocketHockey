@@ -135,6 +135,37 @@ pair1();
 
 function togglePause(){
   game.pause();
+  if(game.isPaused){
+      $('#button-pause').css('color', 'red');
+  }else{
+    $('#button-pause').css('color', 'white');
+  }
+}
+
+//quits current match and resets the game to inital values
+function quit(){
+
+  var quitting = confirm('Are you sure you want to quit?')
+
+  if (quitting) {//reset the game!
+
+    if(game.isPaused){//cannot reset if paused
+      togglePause();
+    }
+
+    game.reset();
+
+    UserTeam.statReset();
+    UserTeam.playerReset();
+
+    CPUTeam.statReset();
+
+
+    $('#lower-half-div').text('');
+
+
+
+  }
 }
 
 function simulate(){

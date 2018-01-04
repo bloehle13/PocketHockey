@@ -45,12 +45,11 @@ var Team = {
         return this.players[index];
       }
     },
-    reset: function(){
+    statReset: function(){
       this.saves = 0;
       this.timeInZone = 0;
-      this.shotAttempts = 0;
+      this.shots = 0;
       this.goals = 0;
-      this.healInjuries();
     },
     shootOrPass: function(shotLocation){
 
@@ -157,9 +156,4 @@ var Team = {
         }
       }
     },
-    healInjuries: function(){
-      for(var i = 0; i < this.players.length; i++){
-        this.players[i].injured = false;
-      }
-    }
 }

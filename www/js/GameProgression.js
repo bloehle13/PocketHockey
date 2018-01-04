@@ -13,10 +13,35 @@ var GameProgression = {
   isPaused: false,
   userTeamHasPuck: false,
   cpuTeamHasPuck: false,
+  hasBeenReset: false,
+  hasBegun: false,
+
+  reset: function(){
+    this.gameTime = 3600;
+    this.UserTeamFaceoffs = 0;
+    this.CPUTeamFaceoffs = 0;
+    this.totalFaceoffs = 0;
+    this.messages = [];
+    this.isPaused = false;
+    this.userTeamHasPuck = false;
+    this.cpuTeamHasPuck = false;
+    this.hasBeenReset = true;
+    this.hasBegun = false;
+  },
 
   pause: function(){
     this.isPaused = !this.isPaused;
-    this.progressGame(this.userTeamHasPuck, this.cpuTeamHasPuck);
+
+    if(this.hasBegun){//only progress game if it has been started by the user
+      this.progressGame(this.userTeamHasPuck, this.cpuTeamHasPuck);
+    }
+  },
+
+  beginGame: function(){
+    CPUTeam.init();
+    this.progressGame(false, false);//neither team starts with puck
+    this.hasBegun = true;
+    console.log(CPUTeam);
   },
 
   addToMessageQueue: function(message){//adds to array of messages to be printed to ticker
@@ -64,12 +89,6 @@ var GameProgression = {
     else return 'tie';
   },
 
-  reset: function(){
-    UserTeam.reset();
-    CPUTeam.reset();
-    this.gameTime = 3600;
-  },
-
   faceoff: function(){
     var player1 = UserTeam.getRandomPlayer();
     var player2 = CPUTeam.getRandomPlayer();
@@ -102,21 +121,15 @@ var GameProgression = {
     else this.faceoff();
   },
 
-  beginGame: function(){
-    CPUTeam.init();
-    this.progressGame(false, false);//neither team starts with puck
-    console.log(CPUTeam);
-  },
-
   progressGame: function(userTeamPosession, cpuTeamPosession){
 
+    if(!this.isPaused && !this.hasBeenReset){
 
-    //UserTeam.genericDrainEnergy();//drain energy of those on ice a little each time
-    //UserTeam.rechargeEnergy();//give energy to bench players
+      UserTeam.genericDrainEnergy();//drain energy of those on ice a little each time
+      UserTeam.rechargeEnergy();//give energy to bench players
 
-    CPUTeam.adapt();
+      CPUTeam.adapt();
 
-    if(!this.isPaused){
       this.userTeamHasPuck = userTeamPosession;
       this.cpuTeamHasPuck = cpuTeamPosession;
 
@@ -177,15 +190,20 @@ var GameProgression = {
 
       //}
       if(this.gameTime > 0){
-          //console.log('Should the game be running: ' + !this.isPaused);
-          setTimeout(function(){game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
+
+          if(!this.hasBeenReset){
+            setTimeout(function(){game.progressGame(game.userTeamHasPuck, game.cpuTeamHasPuck)}, GAME_PROGRESSION_RATE / GAME_PROGRESSION_RATE_MODIFIER);
+          }
 
       }else{
         console.log(CPUTeam);
         console.log(UserTeam);
-        $('#lower-half-div').append('Team 1: ' + '\nShots: ' + UserTeam.shots + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
-        $('#lower-half-div').append('Team 2: ' + '\nShots: ' + CPUTeam.shots + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
+        $('#lower-half-div').append('UserTeam: ' + '\nShots: ' + UserTeam.shots + '\nGoals: ' + UserTeam.goals + '\nSaves: ' + UserTeam.saves + "<br>");
+        $('#lower-half-div').append('CPUTeam: ' + '\nShots: ' + CPUTeam.shots + '\nGoals: ' + CPUTeam.goals + '\nSaves: ' + CPUTeam.saves + "<br>");
       }
+    }else{//This catches the remaining setTimeout() that needs to run after the game has been reset
+
+      this.hasBeenReset = false;
     }
 
 

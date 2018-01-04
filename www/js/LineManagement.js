@@ -86,14 +86,14 @@ function defenderSwitch(lineNum){
 }
 
 function goalieSwitch(lineNum){
-  switch(lineNum){
-    case 1:
-      $('#name-goalie').html(UserTeam.goalie1[STARTER_GOALIE].firstName + '<br> ' + UserTeam.goalie1[STARTER_GOALIE].lastName);
-      break;
-    case 2:
-      $('#name-goalie').html(UserTeam.goalie2[BACKUP_GOALIE].firstName + '<br> ' + UserTeam.goalie2[BACKUP_GOALIE].lastName);
-      break;
-  }
+  // switch(lineNum){
+  //   case 1:
+  //     $('#name-goalie').html(UserTeam.goalie1[STARTER_GOALIE].firstName + '<br> ' + UserTeam.goalie1[STARTER_GOALIE].lastName);
+  //     break;
+  //   case 2:
+  //     $('#name-goalie').html(UserTeam.goalie2[BACKUP_GOALIE].firstName + '<br> ' + UserTeam.goalie2[BACKUP_GOALIE].lastName);
+  //     break;
+  // }
 }
 
 
